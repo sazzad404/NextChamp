@@ -11,6 +11,17 @@ import Login from "./pages/Login/Login.jsx";
 import Register from "./pages/Register/Register.jsx";
 import Dashboard from "./DashboardLayout/Dashboard.jsx";
 
+import DashboardHome from "./DashboardLayout/DashboardHome.jsx";
+import AddContest from "./pages/CreatorPage/AddContest.jsx";
+import ApproveContest from "./pages/AdminPage/ApproveContest.jsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import ManageUser from "./pages/AdminPage/ManageUsers.jsx";
+import MyContests from "./pages/CreatorPage/MyContests.jsx";
+import ContestDetails from "./pages/Contest/ContestDetails.jsx";
+import Payment from "./pages/Payments/Payment.jsx";
+import PaymentSuccess from "./pages/Payments/PaymentSuccess.jsx";
+import PaymentCancelled from "./pages/Payments/PaymentCancelled.jsx";
+import MyParticipation from "./pages/UserPage/MyParticipation.jsx";
 
 
 const router = createBrowserRouter([
@@ -34,18 +45,69 @@ const router = createBrowserRouter([
         path: "/register",
         Component: Register,
       },
+      {
+        path: "/contest-details/:id",
+        Component: ContestDetails,
+      },
+      {
+        path: '/payment/:id',
+        Component: Payment,
+      }
     ],
   },
   {
     path: "/dashboard",
-  Component: Dashboard
+    Component: Dashboard,
+    children: [
+      {
+        index: true,
+        Component: DashboardHome,
+      },
+      //User Route
+      {
+        path: 'my-participation',
+        Component: MyParticipation,
+      },
+      //Creator Route
+      {
+        path: "add-contest",
+        Component: AddContest,
+      },
+      {
+        path: "my-contests",
+        Component: MyContests,
+      },
+
+      //admin Route
+      {
+        path: "approve-contest",
+        Component: ApproveContest,
+      },
+      {
+        path: "manage-users",
+        Component: ManageUser,
+      },
+      //payment route
+      {
+        path: 'payment-success',
+        Component: PaymentSuccess
+      },
+      {
+        path: 'payment-cancelled',
+        Component: PaymentCancelled
+      }
+    ],
   },
 ]);
 
+const queryClient = new QueryClient();
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </QueryClientProvider>
   </StrictMode>
 );

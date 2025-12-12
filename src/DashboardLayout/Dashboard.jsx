@@ -1,8 +1,8 @@
-// src/DashboardLayout/Dashboard.jsx  (বা যেখানে আছে)
-import React, { useEffect, useState } from "react";
-import { use } from "react";
+// src/DashboardLayout/Dashboard.jsx
+import React, { useContext, useEffect, useState } from "react";
+
 import { AuthContext } from "../Provider/AuthProvider";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, Outlet } from "react-router-dom";
 import axios from "axios";
 import {
   Bars3Icon,
@@ -15,18 +15,20 @@ import {
   PencilSquareIcon,
   ShieldCheckIcon,
   HomeIcon,
+  HomeModernIcon,
 } from "@heroicons/react/24/outline";
 import NextChampLogo from "../components/NextChampLogo";
 import Swal from "sweetalert2";
 
+
 const Dashboard = () => {
-  const { user, logOut } = use(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
   const [role, setRole] = useState(null);
   const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
 
-  // যদি কোনো ইউজার না থাকে → লগইন পেজে পাঠিয়ে দে
+  // Fetch user role
   useEffect(() => {
     if (user) {
       axios
@@ -40,25 +42,29 @@ const Dashboard = () => {
   }, [user]);
 
   const handleLogout = () => {
-    logOut?.().then((res) => {
+    logOut?.().then(() => {
       Swal.fire({
         icon: "success",
         title: "Log Out Successful!",
         timer: 1500,
         showConfirmButton: false,
       });
+      navigate("/login");
     });
-    navigate("/login");
   };
 
-  // রোল অনুযায়ী মেনু
+
+
+  // Sidebar menu based on role
   const menu = {
     admin: [
-      { to: "approve", label: "Approve Contests", icon: CheckCircleIcon },
+       { to: "/dashboard", label: "Home", icon: HomeIcon },
+      { to: "approve-contest", label: "Approve Contests", icon: CheckCircleIcon },
       { to: "manage-users", label: "Manage Users", icon: ShieldCheckIcon },
     ],
     creator: [
-      { to: "add-contest", label: "Add Contest", icon: PlusCircleIcon },
+      { to: "/dashboard", label: "Home", icon: HomeIcon },
+      { to: "add-contest", label: "Add Contest", icon: HomeModernIcon },
       { to: "my-contests", label: "My Contests", icon: PencilSquareIcon },
       { to: "declare-winner", label: "Declare Winner", icon: TrophyIcon },
     ],
@@ -85,8 +91,9 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="flex h-screen bg-gray-950 text-gray-100">
-      {/* Mobile Overlay */}
+    <div className="min-h-screen bg-gray-950 text-gray-100 flex">
+
+      {/* MOBILE OVERLAY */}
       {sidebarOpen && (
         <div
           className="fixed inset-0 bg-black/70 z-40 lg:hidden"
@@ -94,18 +101,25 @@ const Dashboard = () => {
         />
       )}
 
-      {/* Sidebar */}
+      {/* ---------------- SIDEBAR ---------------- */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-72 bg-gray-900 border-r border-gray-800 transform transition-transform lg:translate-x-0 ${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        className={`
+          fixed top-0 left-0 
+          h-full w-72 
+          bg-gray-900 border-r border-gray-800 
+          p-6 z-50
+          overflow-y-auto 
+          transform transition-transform
+          ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
+          lg:translate-x-0
+        `}
       >
-        <div className="flex items-center justify-between p-6 border-b border-gray-800">
+        <div className="flex items-center justify-between mb-6">
           <Link
             to={"/"}
             className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-purple-600 bg-clip-text text-transparent"
           >
-            <NextChampLogo></NextChampLogo>
+            <NextChampLogo />
           </Link>
           <button
             onClick={() => setSidebarOpen(false)}
@@ -115,7 +129,8 @@ const Dashboard = () => {
           </button>
         </div>
 
-        <nav className="p-4 space-y-2">
+        {/* NAV ITEMS */}
+        <nav className="space-y-2">
           {navItems.map((item) => {
             const Icon = item.icon;
             return (
@@ -132,8 +147,8 @@ const Dashboard = () => {
           })}
         </nav>
 
-        {/* User Info & Logout */}
-        <div className="absolute bottom-0 w-full p-4 border-t border-gray-800">
+        {/* USER PANEL */}
+        <div className="mt-10 pt-6 border-t border-gray-800">
           <div className="flex items-center gap-3 mb-4">
             <div className="avatar online">
               <div className="w-10 rounded-full">
@@ -144,12 +159,11 @@ const Dashboard = () => {
               </div>
             </div>
             <div>
-              <p className="font-medium text-sm">
-                {user?.displayName || "User"}
-              </p>
+              <p className="font-medium text-sm">{user?.displayName}</p>
               <p className="text-xs text-gray-500 capitalize">{role} panel</p>
             </div>
           </div>
+
           <button
             onClick={handleLogout}
             className="w-full btn btn-outline btn-error btn-sm"
@@ -160,17 +174,20 @@ const Dashboard = () => {
         </div>
       </aside>
 
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col">
-        {/* Topbar */}
-        <header className="bg-gray-900 border-b border-gray-800 px-6 py-4 flex items-center justify-between">
+      {/* ---------------- MAIN CONTENT ---------------- */}
+      <div className="flex-1 ml-0 lg:ml-72 min-h-screen flex flex-col">
+
+        {/* TOP BAR */}
+        <header className="bg-gray-900 border-b border-gray-800 px-6 py-4 flex items-center justify-between sticky top-0 z-20">
           <button
             onClick={() => setSidebarOpen(true)}
             className="lg:hidden text-gray-300"
           >
             <Bars3Icon className="h-7 w-7" />
           </button>
+
           <h2 className="text-2xl font-bold capitalize">{role} Dashboard</h2>
+
           <div className="avatar">
             <div className="w-12 rounded-full ring ring-primary ring-offset-2 ring-offset-gray-900">
               <img
@@ -180,27 +197,13 @@ const Dashboard = () => {
           </div>
         </header>
 
-        {/* Page Content */}
+        {/* OUTLET CONTENT */}
         <main className="flex-1 p-8 overflow-y-auto">
           <div className="max-w-7xl mx-auto">
-            {/* এখানে তোর সব পেজ রাউট করবি */}
-            <div className="text-center py-20">
-              <h1 className="text-5xl font-bold mb-4">
-                Welcome,{" "}
-                <span className="text-primary">{user?.displayName}</span>!
-              </h1>
-              <p className="text-xl text-gray-400">
-                You are logged in as{" "}
-                <span className="text-cyan-400 font-bold capitalize">
-                  {role}
-                </span>
-              </p>
-              <p className="mt-6 text-gray-500">
-                Choose an option from the sidebar
-              </p>
-            </div>
+            <Outlet context={{role}} />
           </div>
         </main>
+
       </div>
     </div>
   );
