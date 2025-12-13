@@ -115,7 +115,7 @@ const PopularContest = () => {
                     <span className="font-semibold text-purple-400 flex items-center gap-1">
                       <Users size={15} /> Participants:
                     </span>
-                    <span>{contest.participants || 0} people</span>
+                    {/* <span>{contest.participants || 0} people</span> */}
                   </div>
                 </div>
 

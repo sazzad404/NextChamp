@@ -19,7 +19,16 @@ const googleProvider = new GoogleAuthProvider();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const [isdark, setIsdark] = useState(
+    JSON.parse(localStorage.getItem("isdark"))
+  );
+  useEffect(() => {
+    localStorage.setItem("dark", JSON.stringify(isdark));
+    document.documentElement.setAttribute(
+      "data-theme",
+      isdark ? "dark" : "light"
+    );
+  }, [isdark]);
 
   console.log(user);
   const createUser = (email, password) => {
@@ -63,6 +72,9 @@ const AuthProvider = ({ children }) => {
 
   const authData = {
     user,
+    setIsdark,
+    isdark,
+
     forgotPassword,
     setLoading,
     loading,

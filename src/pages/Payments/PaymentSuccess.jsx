@@ -1,17 +1,22 @@
 import React, { useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { CheckCircle, Trophy, Sparkles, ArrowRight } from "lucide-react";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();
   const sessionId = searchParams.get('session_id')
+  const axiosSecure = useAxiosSecure()
   console.log(sessionId);
 
   useEffect(()=>{
     if(sessionId){
-        
+        axiosSecure.patch(`/payment-success?session_id=${sessionId}`)
+        .then(res=>{
+            console.log(res.data);
+        })
     }
-  },[sessionId])
+  },[sessionId, axiosSecure])
   return (
     <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
       <div className="max-w-2xl w-full">

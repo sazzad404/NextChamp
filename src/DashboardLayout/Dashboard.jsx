@@ -130,7 +130,7 @@ const Dashboard = () => {
         </div>
 
         {/* NAV ITEMS */}
-        <nav className="space-y-2">
+        <nav className="space-y-2 ">
           {navItems.map((item) => {
             const Icon = item.icon;
             return (
