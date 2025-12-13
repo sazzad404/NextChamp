@@ -70,6 +70,8 @@ const AuthProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
+ 
+
   const authData = {
     user,
     setIsdark,
