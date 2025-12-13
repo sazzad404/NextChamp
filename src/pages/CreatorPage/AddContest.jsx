@@ -174,6 +174,7 @@ const AddContest = () => {
             <option value="development">Development</option>
             <option value="gaming">Gaming</option>
             <option value="music">Music</option>
+            <option value="coding">Coding</option>
           </select>
           {errors.type && (
             <p className="text-red-400 text-sm mt-1">Type is required</p>

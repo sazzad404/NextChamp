@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import { Link, useNavigate, Outlet } from "react-router-dom";
 import axios from "axios";
+
 import {
   Bars3Icon,
   XMarkIcon,
@@ -20,13 +21,13 @@ import {
 import NextChampLogo from "../components/NextChampLogo";
 import Swal from "sweetalert2";
 
-
 const Dashboard = () => {
   const { user, logOut } = useContext(AuthContext);
   const [role, setRole] = useState(null);
   const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
+  const { setIsdark, isdark } = useContext(AuthContext);
 
   // Fetch user role
   useEffect(() => {
@@ -53,13 +54,15 @@ const Dashboard = () => {
     });
   };
 
-
-
   // Sidebar menu based on role
   const menu = {
     admin: [
-       { to: "/dashboard", label: "Home", icon: HomeIcon },
-      { to: "approve-contest", label: "Approve Contests", icon: CheckCircleIcon },
+      { to: "/dashboard", label: "Home", icon: HomeIcon },
+      {
+        to: "approve-contest",
+        label: "Approve Contests",
+        icon: CheckCircleIcon,
+      },
       { to: "manage-users", label: "Manage Users", icon: ShieldCheckIcon },
     ],
     creator: [
@@ -92,7 +95,6 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-950 text-gray-100 flex">
-
       {/* MOBILE OVERLAY */}
       {sidebarOpen && (
         <div
@@ -148,6 +150,7 @@ const Dashboard = () => {
         </nav>
 
         {/* USER PANEL */}
+        {/* USER PANEL */}
         <div className="mt-10 pt-6 border-t border-gray-800">
           <div className="flex items-center gap-3 mb-4">
             <div className="avatar online">
@@ -164,6 +167,18 @@ const Dashboard = () => {
             </div>
           </div>
 
+          {/* Toggle Button */}
+          <div className="flex items-center gap-2 mb-4">
+            <label className="text-gray-400 text-sm">Dark Mode</label>
+            <input
+              type="checkbox"
+              checked={isdark}
+              onChange={() => setIsdark(!isdark)}
+              value={isdark}
+              className="toggle theme-controller"
+            />
+          </div>
+
           <button
             onClick={handleLogout}
             className="w-full btn btn-outline btn-error btn-sm"
@@ -176,7 +191,6 @@ const Dashboard = () => {
 
       {/* ---------------- MAIN CONTENT ---------------- */}
       <div className="flex-1 ml-0 lg:ml-72 min-h-screen flex flex-col">
-
         {/* TOP BAR */}
         <header className="bg-gray-900 border-b border-gray-800 px-6 py-4 flex items-center justify-between sticky top-0 z-50">
           <button
@@ -200,10 +214,9 @@ const Dashboard = () => {
         {/* OUTLET CONTENT */}
         <main className="flex-1 p-8 overflow-y-auto">
           <div className="max-w-7xl mx-auto">
-            <Outlet context={{role}} />
+            <Outlet context={{ role }} />
           </div>
         </main>
-
       </div>
     </div>
   );

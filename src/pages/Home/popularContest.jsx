@@ -35,7 +35,7 @@ const PopularContest = () => {
   }
 
   return (
-    <div className="min-h-screen rounded-3xl bg-gray-950 py-16 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen  bg-gray-950 py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
@@ -75,7 +75,7 @@ const PopularContest = () => {
                 </span>
 
                 <div className="bg-gradient-to-r from-amber-500 to-orange-600 text-white px-6 py-3 rounded-2xl font-black text-lg shadow-2xl flex items-center gap-2 pointer-events-auto">
-                  <Trophy size={22} />৳
+                  <Trophy size={22} />$
                   {parseInt(contest.prize).toLocaleString()}
                 </div>
               </div>
@@ -102,7 +102,7 @@ const PopularContest = () => {
                   {contest.name}
                 </h3>
 
-                {/* ⭐ Extra Info Under Title */}
+                {/* Extra Info */}
                 <div className="flex flex-col gap-2 mb-5 text-sm">
                   <div className="flex justify-between text-gray-300">
                     <span className="font-semibold text-purple-400 flex items-center gap-1">
@@ -115,7 +115,7 @@ const PopularContest = () => {
                     <span className="font-semibold text-purple-400 flex items-center gap-1">
                       <Users size={15} /> Participants:
                     </span>
-                    {/* <span>{contest.participants || 0} people</span> */}
+                    <span>{contest?.participants?.length || 0} people</span>
                   </div>
                 </div>
 
@@ -128,7 +128,7 @@ const PopularContest = () => {
                 <div className="flex justify-between items-center mb-7 text-sm">
                   <div className="flex items-center gap-2 text-green-400 font-semibold">
                     <DollarSign size={19} />
-                    Entry: ৳{contest.price}
+                    Entry: {contest.price}
                   </div>
                   <div className="flex items-center gap-2 text-gray-300">
                     <CalendarDays size={18} />
@@ -140,25 +140,56 @@ const PopularContest = () => {
                   </div>
                 </div>
 
-                {/* Button */}
-                <Link to={`/contest-details/${contest._id}`}>
-                  <button className="w-full py-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold rounded-xl shadow-lg transition-all duration-300 flex items-center justify-center gap-3 group">
-                    Join Now
-                    <svg
-                      className="w-5 h-5 transition-transform group-hover:translate-x-2"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </button>
-                </Link>
+                {/* Button Conditional */}
+               {contest.winner?.length > 0 ? (
+  <div className="grid grid-cols-2 gap-3 sm:gap-4">
+    {/* Disabled Button */}
+    <button 
+      disabled
+      className="py-3 sm:py-3.5 lg:py-4 text-base sm:text-lg font-bold text-gray-400 bg-gray-800/80 rounded-xl shadow-md cursor-not-allowed opacity-70 border border-gray-700 truncate"
+    >
+      Winner Selected
+    </button>
+    
+    {/* Show Details Button - Fixed Overflow */}
+    <Link to={`/contest-details/${contest._id}`} className="block">
+      <button className="w-full py-3 sm:py-3.5 lg:py-4 text-base sm:text-lg font-bold text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 rounded-xl shadow-lg hover:shadow-purple-500/30 transition-all duration-300 flex items-center justify-center gap-2 sm:gap-3 group overflow-hidden">
+        <span className="truncate px-2">Show Details</span>
+        <svg
+          className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0 transition-transform group-hover:translate-x-3 duration-300"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 5l7 7-7 7"
+          />
+        </svg>
+      </button>
+    </Link>
+  </div>
+) : (
+  <Link to={`/contest-details/${contest._id}`} className="block">
+    <button className="w-full py-4 sm:py-5 lg:py-6 text-lg sm:text-xl font-bold text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 rounded-2xl shadow-xl hover:shadow-purple-500/40 transition-all duration-500 flex items-center justify-center gap-3 sm:gap-4 group hover:scale-[1.02] active:scale-[0.98] overflow-hidden">
+      <span className="truncate px-2">Join Now</span>
+      <svg
+        className="w-6 h-6 sm:w-7 sm:h-7 flex-shrink-0 transition-transform group-hover:translate-x-4 duration-500"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="strokeWidth={2.5}"
+          d="M9 5l7 7-7 7"
+        />
+      </svg>
+    </button>
+  </Link>
+)}
               </div>
 
               {/* Subtle ring */}
