@@ -16,7 +16,7 @@ const PopularContest = () => {
   const { data: contests = [], isLoading } = useQuery({
     queryKey: ["popular-contests"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/contests?limit=5");
+      const res = await axiosSecure.get("/contests?limit=6");
       return res.data;
     },
   });

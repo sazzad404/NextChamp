@@ -66,12 +66,12 @@ const Dashboard = () => {
       { to: "/dashboard", label: "Home", icon: HomeIcon },
       { to: "add-contest", label: "Add Contest", icon: HomeModernIcon },
       { to: "my-contests", label: "My Contests", icon: PencilSquareIcon },
-      { to: "declare-winner", label: "Declare Winner", icon: TrophyIcon },
+      { to: "/declare-winner", label: "Declare Winner", icon: TrophyIcon },
     ],
     user: [
-      { to: "browse", label: "Browse Contests", icon: TrophyIcon },
+      { to: "/all-contest", label: "Browse Contests", icon: TrophyIcon },
       { to: "my-participation", label: "My Participation", icon: HomeIcon },
-      { to: "profile", label: "My Profile", icon: UserCircleIcon },
+      { to: "my-profile", label: "My Profile", icon: UserCircleIcon },
     ],
   };
 
@@ -178,7 +178,7 @@ const Dashboard = () => {
       <div className="flex-1 ml-0 lg:ml-72 min-h-screen flex flex-col">
 
         {/* TOP BAR */}
-        <header className="bg-gray-900 border-b border-gray-800 px-6 py-4 flex items-center justify-between sticky top-0 z-20">
+        <header className="bg-gray-900 border-b border-gray-800 px-6 py-4 flex items-center justify-between sticky top-0 z-50">
           <button
             onClick={() => setSidebarOpen(true)}
             className="lg:hidden text-gray-300"

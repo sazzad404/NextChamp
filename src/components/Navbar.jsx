@@ -25,7 +25,7 @@ const Navbar = () => {
 
   const navLinks = [
     { name: "Home", href: "/" },
-    { name: "Resources", href: "#" },
+    { name: "All Contest", href: "/all-contest" },
     { name: "Pricing", href: "#" },
   ];
 

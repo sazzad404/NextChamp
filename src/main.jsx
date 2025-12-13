@@ -22,7 +22,8 @@ import Payment from "./pages/Payments/Payment.jsx";
 import PaymentSuccess from "./pages/Payments/PaymentSuccess.jsx";
 import PaymentCancelled from "./pages/Payments/PaymentCancelled.jsx";
 import MyParticipation from "./pages/UserPage/MyParticipation.jsx";
-
+import AllContest from "./pages/Home/AllContest.jsx";
+import MyProfile from "./pages/UserPage/MyProfile.jsx";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
         Component: Home,
       },
       {
+        path: "/all-contest",
+        Component: AllContest,
+      },
+      {
         path: "/login",
         Component: Login,
       },
@@ -50,9 +55,9 @@ const router = createBrowserRouter([
         Component: ContestDetails,
       },
       {
-        path: '/payment/:id',
+        path: "/payment/:id",
         Component: Payment,
-      }
+      },
     ],
   },
   {
@@ -65,8 +70,12 @@ const router = createBrowserRouter([
       },
       //User Route
       {
-        path: 'my-participation',
+        path: "my-participation",
         Component: MyParticipation,
+      },
+      {
+        path: "my-profile",
+        Component: MyProfile,
       },
       //Creator Route
       {
@@ -89,13 +98,13 @@ const router = createBrowserRouter([
       },
       //payment route
       {
-        path: 'payment-success',
-        Component: PaymentSuccess
+        path: "payment-success",
+        Component: PaymentSuccess,
       },
       {
-        path: 'payment-cancelled',
-        Component: PaymentCancelled
-      }
+        path: "payment-cancelled",
+        Component: PaymentCancelled,
+      },
     ],
   },
 ]);
