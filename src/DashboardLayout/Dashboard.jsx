@@ -66,7 +66,7 @@ const Dashboard = () => {
       { to: "/dashboard", label: "Home", icon: HomeIcon },
       { to: "add-contest", label: "Add Contest", icon: HomeModernIcon },
       { to: "my-contests", label: "My Contests", icon: PencilSquareIcon },
-      { to: "/declare-winner", label: "Declare Winner", icon: TrophyIcon },
+      { to: "declare-winner", label: "Declare Winner", icon: TrophyIcon },
     ],
     user: [
       { to: "/all-contest", label: "Browse Contests", icon: TrophyIcon },

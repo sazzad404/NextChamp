@@ -94,7 +94,8 @@ const ContestDetails = () => {
   );
 
   const isParticipant = !!currentParticipant;
-const hasSubmittedTask = currentParticipant?.task && currentParticipant.task.trim() !== "";
+  const hasSubmittedTask =
+    currentParticipant?.task && currentParticipant.task.trim() !== "";
 
   const handleTaskSubmit = async () => {
     if (!taskText.trim()) {
@@ -106,6 +107,7 @@ const hasSubmittedTask = currentParticipant?.task && currentParticipant.task.tri
       const response = await axiosSecure.patch(`/submit-task/${contest._id}`, {
         email: user.email,
         task: taskText,
+        name: user.displayName,
       });
 
       if (response.data.success) {
@@ -123,7 +125,11 @@ const hasSubmittedTask = currentParticipant?.task && currentParticipant.task.tri
         });
       }
     } catch (err) {
-      Swal.fire("Error", err.response?.data?.message || "Failed to submit task", "error");
+      Swal.fire(
+        "Error",
+        err.response?.data?.message || "Failed to submit task",
+        "error"
+      );
     }
   };
 
@@ -133,7 +139,10 @@ const hasSubmittedTask = currentParticipant?.task && currentParticipant.task.tri
         {/* Back Button */}
         <Link to="/popular-contests">
           <button className="mb-10 flex items-center gap-3 text-gray-400 hover:text-purple-400 transition-all duration-300 group">
-            <ArrowLeft size={24} className="group-hover:-translate-x-1 transition-transform" />
+            <ArrowLeft
+              size={24}
+              className="group-hover:-translate-x-1 transition-transform"
+            />
             <span className="font-semibold text-lg">Back to Contests</span>
           </button>
         </Link>
@@ -143,7 +152,9 @@ const hasSubmittedTask = currentParticipant?.task && currentParticipant.task.tri
           <div className="relative group">
             <div
               className={`relative overflow-hidden rounded-3xl shadow-2xl transition-all duration-700 ease-out ${
-                isImageHovered ? "-translate-y-6 scale-[1.02] shadow-purple-500/40" : ""
+                isImageHovered
+                  ? "-translate-y-6 scale-[1.02] shadow-purple-500/40"
+                  : ""
               }`}
               onMouseEnter={() => setIsImageHovered(true)}
               onMouseLeave={() => setIsImageHovered(false)}
@@ -162,7 +173,8 @@ const hasSubmittedTask = currentParticipant?.task && currentParticipant.task.tri
               </div>
               <div className="absolute bottom-6 right-6">
                 <div className="bg-gradient-to-r from-amber-500 to-orange-600 text-white px-8 py-5 rounded-3xl font-black text-3xl shadow-2xl flex items-center gap-4">
-                  <Trophy size={40} />৳{parseInt(contest.prize).toLocaleString()}
+                  <Trophy size={40} />৳
+                  {parseInt(contest.prize).toLocaleString()}
                 </div>
               </div>
               <div className="absolute inset-0 rounded-3xl bg-gradient-to-t from-purple-600/30 via-transparent to-pink-600/30 blur-3xl opacity-0 group-hover:opacity-70 transition-opacity duration-700" />
@@ -179,7 +191,10 @@ const hasSubmittedTask = currentParticipant?.task && currentParticipant.task.tri
             </h1>
             <p className="text-xl text-gray-300 flex items-center justify-center gap-3">
               <UserCircle size={26} />
-              Hosted by <span className="font-bold text-purple-300">{contest.creatorEmail}</span>
+              Hosted by{" "}
+              <span className="font-bold text-purple-300">
+                {contest.creatorEmail}
+              </span>
             </p>
           </div>
 
@@ -193,20 +208,30 @@ const hasSubmittedTask = currentParticipant?.task && currentParticipant.task.tri
           <div className="bg-gray-800/50 backdrop-blur border border-gray-700 rounded-3xl p-8">
             {contestEnded ? (
               <div className="text-center">
-                <p className="text-4xl font-black text-red-500">Contest Ended</p>
-                <p className="text-gray-400 mt-2">Waiting for winner announcement</p>
+                <p className="text-4xl font-black text-red-500">
+                  Contest Ended
+                </p>
+                <p className="text-gray-400 mt-2">
+                  Waiting for winner announcement
+                </p>
               </div>
             ) : (
               <>
                 <div className="flex items-center justify-center gap-3 mb-6">
                   <Clock size={32} className="text-yellow-400" />
-                  <h3 className="text-2xl font-bold text-white">Time Remaining</h3>
+                  <h3 className="text-2xl font-bold text-white">
+                    Time Remaining
+                  </h3>
                 </div>
                 <div className="grid grid-cols-4 gap-4 text-center">
                   {Object.entries(timeLeft).map(([unit, value]) => (
                     <div key={unit} className="bg-gray-900/70 rounded-2xl py-5">
-                      <p className="text-4xl font-black text-purple-400">{formatNumber(value)}</p>
-                      <p className="text-sm text-gray-400 uppercase tracking-wider">{unit}</p>
+                      <p className="text-4xl font-black text-purple-400">
+                        {formatNumber(value)}
+                      </p>
+                      <p className="text-sm text-gray-400 uppercase tracking-wider">
+                        {unit}
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -218,7 +243,9 @@ const hasSubmittedTask = currentParticipant?.task && currentParticipant.task.tri
           <div className="bg-gradient-to-r from-amber-500/10 to-orange-600/10 border border-amber-500/30 rounded-3xl p-8 text-center">
             <Trophy size={48} className="mx-auto mb-4 text-amber-400" />
             <p className="text-2xl text-gray-300">Total Prize Pool</p>
-            <p className="text-6xl font-black text-white">৳{parseInt(contest.prize).toLocaleString()}</p>
+            <p className="text-6xl font-black text-white">
+              ৳{parseInt(contest.prize).toLocaleString()}
+            </p>
           </div>
 
           {/* Description */}
@@ -265,8 +292,18 @@ const hasSubmittedTask = currentParticipant?.task && currentParticipant.task.tri
                 >
                   {contestEnded ? "Registration Closed" : "Register & Pay Now"}
                   {!contestEnded && (
-                    <svg className="w-8 h-8 transition-transform group-hover:translate-x-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
+                    <svg
+                      className="w-8 h-8 transition-transform group-hover:translate-x-3"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={3}
+                        d="M9 5l7 7-7 7"
+                      />
                     </svg>
                   )}
                 </button>
@@ -274,12 +311,22 @@ const hasSubmittedTask = currentParticipant?.task && currentParticipant.task.tri
             ) : hasSubmittedTask ? (
               // Task Already Submitted
               <div className="w-full py-10 bg-gradient-to-r from-green-600/20 to-emerald-600/20 border-2 border-green-500/50 rounded-3xl text-center">
-                <CheckCircle size={80} className="mx-auto mb-6 text-green-400" />
-                <p className="text-4xl font-black text-green-300">Task Submitted!</p>
-                <p className="text-xl text-gray-300 mt-4">
-                  Your submission: <span className="text-purple-300 font-semibold">"{currentParticipant.task || "Incomplete"}"</span>
+                <CheckCircle
+                  size={80}
+                  className="mx-auto mb-6 text-green-400"
+                />
+                <p className="text-4xl font-black text-green-300">
+                  Task Submitted!
                 </p>
-                <p className="text-lg text-gray-400 mt-3">Thank you! Best of luck in the contest 🎉</p>
+                <p className="text-xl text-gray-300 mt-4">
+                  Your submission:{" "}
+                  <span className="text-purple-300 font-semibold">
+                    "{currentParticipant.task || "Incomplete"}"
+                  </span>
+                </p>
+                <p className="text-lg text-gray-400 mt-3">
+                  Thank you! Best of luck in the contest 🎉
+                </p>
               </div>
             ) : (
               // Submit Task Button
@@ -288,7 +335,10 @@ const hasSubmittedTask = currentParticipant?.task && currentParticipant.task.tri
                 className="w-full py-6 text-2xl font-black rounded-3xl bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white shadow-2xl transition-all duration-500 transform hover:scale-105 flex items-center justify-center gap-4 group"
               >
                 Submit Your Task
-                <Sparkles size={32} className="group-hover:rotate-12 transition-transform" />
+                <Sparkles
+                  size={32}
+                  className="group-hover:rotate-12 transition-transform"
+                />
               </button>
             )}
           </div>
@@ -299,7 +349,9 @@ const hasSubmittedTask = currentParticipant?.task && currentParticipant.task.tri
       {showModal && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 px-4">
           <div className="bg-gray-800 border border-gray-700 rounded-3xl p-8 w-full max-w-2xl shadow-2xl">
-            <h2 className="text-3xl font-black text-white mb-6 text-center">Submit Your Task</h2>
+            <h2 className="text-3xl font-black text-white mb-6 text-center">
+              Submit Your Task
+            </h2>
             <textarea
               value={taskText}
               onChange={(e) => setTaskText(e.target.value)}

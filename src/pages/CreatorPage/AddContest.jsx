@@ -49,6 +49,7 @@ const AddContest = () => {
       image: data.image,
       instruction: data.instruction,
       creatorEmail: user?.email,
+      winnerStatus: "Not Declared"
     };
 
     axiosSecure

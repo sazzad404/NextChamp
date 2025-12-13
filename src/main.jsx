@@ -25,6 +25,7 @@ import MyParticipation from "./pages/UserPage/MyParticipation.jsx";
 import AllContest from "./pages/Home/AllContest.jsx";
 import MyProfile from "./pages/UserPage/MyProfile.jsx";
 import SeeSubmissions from "./pages/CreatorPage/SeeSubmissions.jsx";
+import DeclareWinner from "./pages/CreatorPage/DeclareWinner.jsx";
 
 const router = createBrowserRouter([
   {
@@ -88,8 +89,12 @@ const router = createBrowserRouter([
         Component: MyContests,
       },
       {
-        path: 'see-submissions/:id',
-        Component: SeeSubmissions
+        path: "see-submissions/:id",
+        Component: SeeSubmissions,
+      },
+      {
+        path: "declare-winner",
+        Component: DeclareWinner,
       },
 
       //admin Route
