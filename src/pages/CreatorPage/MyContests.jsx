@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { Link } from "react-router";
 
 const MyContests = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -162,9 +163,14 @@ const MyContests = () => {
                   )}
 
                   {/* See Submissions Always Shows */}
-                  <button className="btn btn-sm btn-info w-full sm:w-auto">
-                    See Submissions
-                  </button>
+                  {contest.status === "approved" && (
+                    <Link
+                      to={`/dashboard/see-submissions/${contest._id}`}
+                      className="btn btn-sm btn-info w-full sm:w-auto"
+                    >
+                      See Submissions
+                    </Link>
+                  )}
                 </td>
               </tr>
             ))}

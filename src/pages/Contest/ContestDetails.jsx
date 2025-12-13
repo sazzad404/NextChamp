@@ -94,7 +94,7 @@ const ContestDetails = () => {
   );
 
   const isParticipant = !!currentParticipant;
-  const hasSubmittedTask = !!currentParticipant?.task;
+const hasSubmittedTask = currentParticipant?.task && currentParticipant.task.trim() !== "";
 
   const handleTaskSubmit = async () => {
     if (!taskText.trim()) {
@@ -277,7 +277,7 @@ const ContestDetails = () => {
                 <CheckCircle size={80} className="mx-auto mb-6 text-green-400" />
                 <p className="text-4xl font-black text-green-300">Task Submitted!</p>
                 <p className="text-xl text-gray-300 mt-4">
-                  Your submission: <span className="text-purple-300 font-semibold">"{currentParticipant.task}"</span>
+                  Your submission: <span className="text-purple-300 font-semibold">"{currentParticipant.task || "Incomplete"}"</span>
                 </p>
                 <p className="text-lg text-gray-400 mt-3">Thank you! Best of luck in the contest 🎉</p>
               </div>
