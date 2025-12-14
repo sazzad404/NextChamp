@@ -1,4 +1,3 @@
-// src/DashboardLayout/Dashboard.jsx
 import React, { useContext, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { AuthContext } from "../Provider/AuthProvider";
@@ -159,28 +158,40 @@ const Dashboard = () => {
             >
               <Bars3Icon className="h-6 w-6" />
             </button>
+
             <Link className="flex items-center gap-3 text-sm font-semibold text-gray-200">
               <span className="lg:hidden">
                 <NextChampLogo />
               </span>
-              <span className="hidden lg:inline text-lg font-bold">{role} Dashboard</span>
+              <span className="hidden lg:inline text-lg font-bold">
+                {role} Dashboard
+              </span>
             </Link>
           </div>
-          <h2 className="text-lg font-semibold capitalize lg:hidden">{role} Dashboard</h2>
-          <motion.div className="avatar" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
+
+          <h2 className="text-lg font-semibold capitalize lg:hidden">
+            {role} Dashboard
+          </h2>
+
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
             <div className="w-11 h-11 rounded-full ring ring-primary ring-offset-2 ring-offset-gray-900 overflow-hidden">
-              <img src={user?.photoURL || "https://i.ibb.co/0jxTWfH/user.png"} alt="avatar" className="w-full h-full object-cover" />
+              <img
+                src={user?.photoURL || "https://i.ibb.co/0jxTWfH/user.png"}
+                alt="avatar"
+                className="w-full h-full object-cover"
+              />
             </div>
           </motion.div>
         </motion.header>
 
-        {/* OUTLET CONTENT */}
-        <motion.main className="flex-1 p-6 md:p-8 overflow-y-auto" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.35 }}>
-          <AnimatePresence mode="wait">
-            <motion.div key={location.pathname} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.35 }}>
-              <Outlet context={{ role }} />
-            </motion.div>
-          </AnimatePresence>
+        {/* OUTLET CONTENT (NO ROUTE ANIMATION) */}
+        <motion.main
+          className="flex-1 p-6 md:p-8 overflow-y-auto"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.35 }}
+        >
+          <Outlet context={{ role }} />
         </motion.main>
       </motion.div>
     </div>
@@ -189,82 +200,111 @@ const Dashboard = () => {
 
 export default Dashboard;
 
-// ---------------- SidebarContent ----------------
-const SidebarContent = ({ navItems, user, role, onClose, isdark, setIsdark, handleLogout, currentPath }) => {
+/* ================= SidebarContent ================= */
+
+const SidebarContent = ({
+  navItems,
+  user,
+  role,
+  onClose,
+  isdark,
+  setIsdark,
+  handleLogout,
+  currentPath,
+}) => {
   return (
     <div className="flex flex-col h-full">
       <div className="flex items-center justify-between mb-6">
-        <Link to={"/"} onClick={onClose} className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-purple-600 bg-clip-text text-transparent">
+        <Link
+          to="/"
+          onClick={onClose}
+          className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-purple-600 bg-clip-text text-transparent"
+        >
           <NextChampLogo />
         </Link>
-        <button onClick={onClose} className="lg:hidden text-gray-400 p-1 rounded-md hover:bg-gray-800 transition">
+
+        <button
+          onClick={onClose}
+          className="lg:hidden text-gray-400 p-1 rounded-md hover:bg-gray-800 transition"
+        >
           <XMarkIcon className="h-6 w-6" />
         </button>
       </div>
 
       {/* NAV ITEMS */}
-  {/* NAV ITEMS */}
-<nav className="flex-1 space-y-2">
-  {navItems.map((item) => {
-    const Icon = item.icon;
+      <nav className="flex-1 space-y-2">
+        {navItems.map((item) => {
+          const Icon = item.icon;
 
-    const isHome = item.to === "/dashboard";
-    const isActive = isHome
-      ? currentPath === "/dashboard"
-      : currentPath.startsWith(
-          item.to.startsWith("/") ? item.to : `/dashboard/${item.to}`
-        );
+          const isHome = item.to === "/dashboard";
+          const isActive = isHome
+            ? currentPath === "/dashboard"
+            : currentPath.startsWith(
+                item.to.startsWith("/")
+                  ? item.to
+                  : `/dashboard/${item.to}`
+              );
 
-    return (
-      <motion.div
-        key={item.to}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-      >
-        <Link
-          to={item.to}
-          onClick={onClose}
-          className={`flex items-center gap-3 px-4 py-3 rounded-xl transition group
-            ${
-              isActive
-                ? "bg-indigo-600 text-white"
-                : "text-gray-300 hover:bg-gray-800 hover:text-white"
-            }
-          `}
-        >
-          <Icon
-            className={`h-5 w-5 transition ${
-              isActive
-                ? "text-white"
-                : "text-gray-300 group-hover:text-white"
-            }`}
-          />
-          <span className="text-sm">{item.label}</span>
-        </Link>
-      </motion.div>
-    );
-  })}
-</nav>
-
+          return (
+            <motion.div
+              key={item.to}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <Link
+                to={item.to}
+                onClick={onClose}
+                className={`flex items-center gap-3 px-4 py-3 rounded-xl transition
+                  ${
+                    isActive
+                      ? "bg-indigo-600 text-white"
+                      : "text-gray-300 hover:bg-gray-800 hover:text-white"
+                  }`}
+              >
+                <Icon
+                  className={`h-5 w-5 ${
+                    isActive ? "text-white" : "text-gray-300"
+                  }`}
+                />
+                <span className="text-sm">{item.label}</span>
+              </Link>
+            </motion.div>
+          );
+        })}
+      </nav>
 
       {/* USER PANEL */}
       <div className="mt-6 pt-6 border-t border-gray-800">
         <div className="flex items-center gap-3 mb-4">
           <div className="w-10 h-10 rounded-full overflow-hidden">
-            <img src={user?.photoURL || "https://i.ibb.co/0jxTWfH/user.png"} alt="avatar" className="w-full h-full object-cover" />
+            <img
+              src={user?.photoURL || "https://i.ibb.co/0jxTWfH/user.png"}
+              alt="avatar"
+              className="w-full h-full object-cover"
+            />
           </div>
           <div>
-            <p className="font-medium text-sm">{user?.displayName || "User"}</p>
+            <p className="font-medium text-sm">
+              {user?.displayName || "User"}
+            </p>
             <p className="text-xs text-gray-500 capitalize">{role} panel</p>
           </div>
         </div>
 
         <div className="flex items-center justify-between mb-4">
           <label className="text-gray-400 text-sm">Dark Mode</label>
-          <input type="checkbox" checked={isdark} onChange={() => setIsdark(!isdark)} value={isdark} className="toggle toggle-sm" />
+          <input
+            type="checkbox"
+            checked={isdark}
+            onChange={() => setIsdark(!isdark)}
+            className="toggle toggle-sm"
+          />
         </div>
 
-        <button onClick={handleLogout} className="w-full flex items-center justify-center gap-2 py-2 rounded-lg border border-red-600 text-red-400 hover:bg-red-600/10 transition">
+        <button
+          onClick={handleLogout}
+          className="w-full flex items-center justify-center gap-2 py-2 rounded-lg border border-red-600 text-red-400 hover:bg-red-600/10 transition"
+        >
           <ArrowRightOnRectangleIcon className="h-4 w-4" />
           Logout
         </button>
