@@ -1,18 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // jodi react-router use koro, na hole <a> use koro
+import NextChampLogo from './NextChampLogo';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gray-900 text-gray-300 py-12 mt-20 border-t border-gray-800">
+    <footer className="bg-gray-900 text-gray-300 py-12  border-t border-gray-800">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           
           {/* Brand & Description */}
           <div className="space-y-6">
-            <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
-              ContestHub
+            <h2 className="text-4xl  font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
+             <NextChampLogo></NextChampLogo>
             </h2>
             <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
               Bangladesh er sobcheye boro contest platform. Graphic design, video editing, writing, photography — sob category te exciting contest ek jaygay!

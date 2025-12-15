@@ -51,7 +51,7 @@ const HeroBanner = () => {
   });
 
   return (
-    <div className="relative pt-48 pb-12 xl:pt-60 sm:pb-16 lg:pb-32 xl:pb-48 2xl:pb-56">
+    <div className="relative pt-48 pb-12 h-270 xl:pt-60 sm:pb-16 lg:pb-32 xl:pb-48 2xl:pb-56">
       {/* Slider Background */}
       <div className="absolute inset-0 overflow-hidden">
         <AnimatePresence mode="wait" initial={false}>

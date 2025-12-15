@@ -36,7 +36,7 @@ const HowItWorksSection = () => {
   ];
 
   return (
-    <section className="py-16 bg-zinc-950 sm:py-20 lg:py-28">
+    <section className="py-16 bg-gray-950 sm:py-20 lg:py-28">
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         {/* Headline */}
         <motion.div

@@ -53,6 +53,7 @@ const DeclareWinner = () => {
         reset();
         setSelectedImage("");
         if (res.data.modifiedCount) {
+          
           Swal.fire({
             position: "top-end",
             icon: "success",
