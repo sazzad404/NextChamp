@@ -3,7 +3,6 @@ import axios from "axios";
 // import { AuthContext } from "../Provider/AuthProvider";
 
 const axiosSecure = axios.create({
-  
   baseURL: "http://localhost:3000/",
 });
 

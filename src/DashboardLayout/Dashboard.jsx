@@ -213,7 +213,7 @@ const SidebarContent = ({
   currentPath,
 }) => {
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex  flex-col h-full">
       <div className="flex items-center justify-between mb-6">
         <Link
           to="/"

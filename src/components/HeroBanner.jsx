@@ -1,7 +1,10 @@
 import React from "react";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 
 const HeroBanner = () => {
+  
+
   return (
     <div>
       <div class="relative pt-48 pb-12 bg-black xl:pt-60 sm:pb-16 lg:pb-32 xl:pb-48 2xl:pb-56">
