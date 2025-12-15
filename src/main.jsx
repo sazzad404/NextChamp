@@ -27,6 +27,7 @@ import MyProfile from "./pages/UserPage/MyProfile.jsx";
 import SeeSubmissions from "./pages/CreatorPage/SeeSubmissions.jsx";
 import DeclareWinner from "./pages/CreatorPage/DeclareWinner.jsx";
 import Error404 from "./components/ErrorPage.jsx";
+import SupportSection from "./components/SupportSection.jsx";
 
 const router = createBrowserRouter([
   {
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
         path: "/payment/:id",
         Component: Payment,
       },
+      {
+        path: 'support-section',
+        Component: SupportSection
+      }
     ],
   },
   {

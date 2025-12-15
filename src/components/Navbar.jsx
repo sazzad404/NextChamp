@@ -26,7 +26,7 @@ const Navbar = () => {
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "All Contest", href: "/all-contest" },
-    { name: "Pricing", href: "#" },
+    { name: "Support", href: "support-section" },
   ];
 
   const handleLogout = async () => {
