@@ -42,7 +42,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className=" fixed inset-x-0 top-0 z-10 w-full bg-black/30 backdrop-blur-lg">
+    <header className=" fixed inset-x-0 top-0 z-50 w-full bg-black/30 backdrop-blur-lg">
       <div className="px-4 mx-auto sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
@@ -120,7 +120,6 @@ const Navbar = () => {
             onClick={() => setIsOpen(!isOpen)}
             className="inline-flex p-2 text-white rounded-md lg:hidden hover:bg-gray-800"
           >
-            
             {isOpen ? (
               <svg className="w-6 h-6" fill="none" stroke="currentColor">
                 <path strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
@@ -186,7 +185,6 @@ const Navbar = () => {
           </motion.div>
         )}
       </AnimatePresence>
-      
     </header>
   );
 };

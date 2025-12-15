@@ -26,6 +26,7 @@ import AllContest from "./pages/Home/AllContest.jsx";
 import MyProfile from "./pages/UserPage/MyProfile.jsx";
 import SeeSubmissions from "./pages/CreatorPage/SeeSubmissions.jsx";
 import DeclareWinner from "./pages/CreatorPage/DeclareWinner.jsx";
+import Error404 from "./components/ErrorPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -116,6 +117,10 @@ const router = createBrowserRouter([
         Component: PaymentCancelled,
       },
     ],
+  },
+  {
+    path: "/*",
+    Component: Error404,
   },
 ]);
 
