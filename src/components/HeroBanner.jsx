@@ -7,6 +7,7 @@ import useDebounce from "../hooks/useDebounce";
 import { AuthContext } from "../Provider/AuthProvider";
 import { MdOutlineExplore } from "react-icons/md";
 import { HiOutlineArrowRightStartOnRectangle } from "react-icons/hi2";
+import Loader from "./Loader";
 
 const HeroBanner = () => {
   const { user } = useContext(AuthContext);
@@ -56,9 +57,9 @@ const HeroBanner = () => {
   });
 
   return (
-    <div className="relative h-[70vh]  min-h-[500px] pt-32 pb-12 flex items-center">
+    <div className="relative h-[80vh] min-h-[600px] flex items-center justify-center overflow-hidden">
       {/* Slider Background */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0">
         <AnimatePresence mode="wait" initial={false}>
           <motion.img
             key={currentIndex}
@@ -72,124 +73,144 @@ const HeroBanner = () => {
               duration: 1.2,
               ease: [0.25, 0.1, 0.25, 1],
             }}
-            className="object-cover w-full h-full brightness-75"
+            className="object-cover w-full h-full brightness-70"
           />
         </AnimatePresence>
 
-        {/* Stronger dark overlay – ekhon kono bright/white image asleo text perfect readable */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80" />
+        {/* Strong gradient overlay for perfect text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/90" />
       </div>
 
-      {/* Content */}
-      <div className="relative z-10">
-        <div className="px-6 mx-auto sm:px-8 lg:px-12 max-w-7xl">
-          <div className="w-full lg:w-2/3 xl:w-1/2">
+      {/* Main Content Container */}
+      <div className="relative z-10 w-full">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+          <div className="max-w-3xl"> {/* Limited width for better readability */}
+
             {/* Subtitle */}
-            <h1 className="font-sans text-lg font-medium tracking-wider text-white/90 drop-shadow-lg">
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-white/90 text-xl md:text-2xl font-medium tracking-widest uppercase"
+            >
               Discover. Compete. Win Big.
-            </h1>
+            </motion.h2>
 
             {/* Main Headline */}
-            <p className="mt-6 tracking-tight">
-              <span className="font-sans font-bold text-6xl sm:text-7xl text-white drop-shadow-2xl">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="mt-6"
+            >
+              <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white leading-tight">
                 Find the best
-              </span>
-              <br />
-              <span className="font-serif italic font-bold text-7xl sm:text-8xl text-white drop-shadow-2xl">
-                online contests
-              </span>
-            </p>
+                <br />
+                <span className="font-serif italic text-6xl md:text-7xl lg:text-8xl xl:text-9xl">
+                  online contests
+                </span>
+              </h1>
+            </motion.div>
 
-            {/* Search Bar – aro premium feel */}
-            <div className="mt-12">
-              <div className="flex items-center bg-white/95 backdrop-blur-lg rounded-full px-6 py-5 shadow-2xl border border-white/30">
+            {/* Search Bar */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="mt-12 max-w-2xl"
+            >
+              <div className="flex items-center bg-white/95 backdrop-blur-xl rounded-full px-8 py-6 shadow-2xl border border-white/40">
                 <input
                   type="text"
                   placeholder="Search by contest name or category…"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="w-full text-black focus:outline-none bg-transparent text-lg placeholder-gray-600"
+                  className="w-full text-black focus:outline-none bg-transparent text-lg md:text-xl placeholder-gray-500"
                 />
               </div>
-            </div>
-            {/* CTA BUTTONS */}
+            </motion.div>
+
+            {/* CTA Buttons */}
             <motion.div
-              className="mt-10 flex flex-wrap gap-6 items-center"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="mt-12 flex flex-wrap items-center gap-6"
             >
-              {/* Explore Contests */}
               <motion.button
-                whileHover={{ scale: 1.06 }}
+                whileHover={{ scale: 1.08 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-8 flex items-center gap-2 py-4 rounded-full bg-orange-500 text-white font-semibold text-lg shadow-xl hover:shadow-orange-500/40 transition-all"
                 onClick={() => navigate("/all-contest")}
+                className="px-10 py-5 rounded-full bg-orange-500 hover:bg-orange-600 text-white font-semibold text-lg md:text-xl flex items-center gap-3 shadow-2xl hover:shadow-orange-500/50 transition-all duration-300"
               >
-                <MdOutlineExplore size={24} />
-                Explore Context
+                <MdOutlineExplore size={28} />
+                Explore Contests
               </motion.button>
 
-              {/* Get Started – only for non-logged users */}
               {!user && (
                 <motion.button
-                  whileHover={{ scale: 1.06 }}
+                  whileHover={{ scale: 1.08 }}
                   whileTap={{ scale: 0.95 }}
-                  className="px-8 py-4 flex items-center gap-2 rounded-full 
-             text-white font-semibold text-lg relative border-2 border-transparent 
-             overflow-hidden transition-all shadow-lg hover:shadow-2xl
-             before:absolute before:inset-0 before:rounded-full before:border-2 
-             before:border-gradient-to-r before:from-blue-800 before:to-cyan-800 before:animate-pulse"
                   onClick={() => navigate("/register")}
+                  className="px-10 py-5 rounded-full bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold text-lg md:text-xl flex items-center gap-3 shadow-2xl hover:shadow-cyan-500/50 transition-all duration-300"
                 >
-                  <HiOutlineArrowRightStartOnRectangle size={24} />
-                  Get Start
+                  <HiOutlineArrowRightStartOnRectangle size={28} />
+                  Get Started
                 </motion.button>
               )}
             </motion.div>
 
-            {/* Contest Cards */}
-            <div className="mt-8">
+            {/* Search Results Cards */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+              className="mt-16"
+            >
               {isLoading && (
-                <p className="text-white/90 text-lg">Loading contests...</p>
+                <Loader></Loader>
               )}
               {!isLoading && contests.length === 0 && debouncedSearch && (
                 <p className="text-white/90 text-lg">
                   No contests found for "{debouncedSearch}"
                 </p>
               )}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-                {contests.map((contest) => (
-                  <div
-                    key={contest._id}
-                    onClick={() => handleContestClick(contest._id)}
-                    className="bg-white/95 backdrop-blur-md rounded-2xl p-6 shadow-xl hover:shadow-2xl cursor-pointer transition-all duration-300 hover:scale-[1.03] border border-white/20"
-                  >
-                    <h3 className="font-bold text-xl text-black">
-                      {contest.name}
-                    </h3>
-                    <p className="text-gray-700 text-base mt-2">
-                      {contest.type || contest.category}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
+
+              {contests.length > 0 && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {contests.map((contest) => (
+                    <motion.div
+                      key={contest._id}
+                      whileHover={{ y: -8 }}
+                      onClick={() => handleContestClick(contest._id)}
+                      className="bg-white/95 backdrop-blur-lg rounded-3xl p-8 shadow-2xl hover:shadow-3xl cursor-pointer transition-all duration-300 border border-white/30"
+                    >
+                      <h3 className="font-bold text-2xl text-gray-900">
+                        {contest.name}
+                      </h3>
+                      <p className="text-gray-600 text-lg mt-3">
+                        {contest.type || contest.category}
+                      </p>
+                    </motion.div>
+                  ))}
+                </div>
+              )}
+            </motion.div>
           </div>
         </div>
       </div>
 
-      {/* Slider Dots – aro clean */}
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex space-x-4">
+      {/* Slider Dots */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-3">
         {images.map((_, idx) => (
-          <span
+          <button
             key={idx}
-            className={`w-4 h-4 rounded-full cursor-pointer transition-all duration-300 ${
+            onClick={() => setCurrentIndex(idx)}
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${
               idx === currentIndex
-                ? "bg-white shadow-lg shadow-white/50 scale-150"
+                ? "bg-white w-10 shadow-lg"
                 : "bg-white/50 hover:bg-white/80"
             }`}
-            onClick={() => setCurrentIndex(idx)}
           />
         ))}
       </div>

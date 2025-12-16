@@ -4,7 +4,6 @@ const Loader = ({ text = "Loading..." }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-950">
       <div className="flex flex-col items-center gap-6">
-
         {/* Outer Glow Ring */}
         <motion.div
           animate={{ rotate: 360 }}
