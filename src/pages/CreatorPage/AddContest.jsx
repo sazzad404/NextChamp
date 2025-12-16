@@ -49,7 +49,7 @@ const AddContest = () => {
       image: data.image,
       instruction: data.instruction,
       creatorEmail: user?.email,
-      winnerStatus: "Not Declared"
+      winnerStatus: "Not Declared",
     };
 
     axiosSecure
@@ -169,12 +169,72 @@ const AddContest = () => {
             className="w-full p-3 rounded-lg bg-gray-800 border border-gray-600"
           >
             <option value="">Select type</option>
+
             <option value="design">Design</option>
+            <option value="ui-ux">UI / UX</option>
+            <option value="graphic-design">Graphic Design</option>
+            <option value="illustration">Illustration</option>
+            <option value="photography">Photography</option>
+            <option value="videography">Videography</option>
+            <option value="animation">Animation</option>
+
             <option value="writing">Writing</option>
+            <option value="content-writing">Content Writing</option>
+            <option value="copywriting">Copywriting</option>
+            <option value="blogging">Blogging</option>
+            <option value="story-writing">Story Writing</option>
+            <option value="poetry">Poetry</option>
+            <option value="scriptwriting">Script Writing</option>
+
             <option value="development">Development</option>
-            <option value="gaming">Gaming</option>
-            <option value="music">Music</option>
             <option value="coding">Coding</option>
+            <option value="web-development">Web Development</option>
+            <option value="app-development">App Development</option>
+            <option value="game-development">Game Development</option>
+            <option value="software-engineering">Software Engineering</option>
+            <option value="ai-ml">AI / Machine Learning</option>
+            <option value="data-science">Data Science</option>
+            <option value="cyber-security">Cyber Security</option>
+            <option value="blockchain">Blockchain</option>
+
+            <option value="gaming">Gaming</option>
+            <option value="esports">Esports</option>
+            <option value="mobile-gaming">Mobile Gaming</option>
+            <option value="pc-gaming">PC Gaming</option>
+            <option value="console-gaming">Console Gaming</option>
+
+            <option value="music">Music</option>
+            <option value="singing">Singing</option>
+            <option value="instrumental">Instrumental</option>
+            <option value="music-production">Music Production</option>
+            <option value="dj">DJ</option>
+            <option value="rap">Rap</option>
+
+            <option value="marketing">Marketing</option>
+            <option value="digital-marketing">Digital Marketing</option>
+            <option value="seo">SEO</option>
+            <option value="social-media">Social Media</option>
+            <option value="branding">Branding</option>
+            <option value="entrepreneurship">Entrepreneurship</option>
+            <option value="business-idea">Business Ideas</option>
+
+            <option value="quiz">Quiz</option>
+            <option value="mcq">MCQ</option>
+            <option value="problem-solving">Problem Solving</option>
+            <option value="math">Mathematics</option>
+            <option value="science">Science</option>
+            <option value="programming-challenge">Programming Challenge</option>
+
+            <option value="art">Art</option>
+            <option value="craft">Craft</option>
+            <option value="fashion">Fashion</option>
+            <option value="makeup">Makeup</option>
+            <option value="lifestyle">Lifestyle</option>
+
+            <option value="innovation">Innovation</option>
+            <option value="hackathon">Hackathon</option>
+            <option value="open-challenge">Open Challenge</option>
+            <option value="other">Other</option>
           </select>
           {errors.type && (
             <p className="text-red-400 text-sm mt-1">Type is required</p>

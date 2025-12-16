@@ -54,7 +54,9 @@ const AuthProvider = ({ children }) => {
   };
 
   const logOut = () => {
+
     return signOut(auth);
+    
   };
 
   // google auth

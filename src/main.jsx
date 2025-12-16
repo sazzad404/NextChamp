@@ -29,6 +29,7 @@ import DeclareWinner from "./pages/CreatorPage/DeclareWinner.jsx";
 import Error404 from "./components/ErrorPage.jsx";
 import SupportSection from "./components/SupportSection.jsx";
 import PrivateRoute from "./pages/PrivateRoute/PrivateRoute.jsx";
+import MyWinningContest from "./pages/UserPage/MyWinningContest.jsx";
 
 const router = createBrowserRouter([
   {
@@ -86,6 +87,10 @@ const router = createBrowserRouter([
         Component: DashboardHome,
       },
       //User Route
+      {
+        path: "my-wining-contests",
+        Component: MyWinningContest,
+      },
       {
         path: "my-participation",
         Component: MyParticipation,

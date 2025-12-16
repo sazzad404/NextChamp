@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import NextChampLogo from "./NextChampLogo";
 import { AuthContext } from "../Provider/AuthProvider";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
 
@@ -23,83 +23,122 @@ const Navbar = () => {
     }
   }, [user]);
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdown && !e.target.closest('.dropdown-container')) {
+        setDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [dropdown]);
+
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "All Contest", href: "/all-contest" },
-    { name: "Support", href: "support-section" },
+    { name: "Support", href: "/support-section" },
   ];
 
   const handleLogout = async () => {
-    await logOut().then(() => {
+    try {
+      await logOut();
       Swal.fire({
         icon: "success",
         title: "Log Out Successful!",
         timer: 1500,
         showConfirmButton: false,
       });
-    });
-    setDropdown(false);
+      setDropdown(false);
+      setIsOpen(false);
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
   };
 
   return (
-    <header className=" fixed inset-x-0 top-0 z-50 w-full bg-black/30 backdrop-blur-lg">
-      <div className="px-4 mx-auto sm:px-6 lg:px-8">
+    <header className="fixed inset-x-0 top-0 z-50 w-full bg-black/40 backdrop-blur-xl border-b border-white/10">
+      <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <Link to={"/"}>
+          <Link to="/" className="flex-shrink-0">
             <NextChampLogo size="small" />
           </Link>
 
-          {/* Desktop Links */}
-          <div className="hidden ml-auto lg:flex lg:items-center lg:space-x-10">
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center space-x-8 ml-auto">
             {navLinks.map((link, idx) => (
-              <a
+              <Link
                 key={idx}
-                href={link.href}
-                className="text-base font-semibold text-gray-200 transition-all duration-200 hover:text-white"
+                to={link.href}
+                className="text-base font-semibold text-gray-200 transition-all duration-300 hover:text-white hover:scale-105 relative group"
               >
                 {link.name}
-              </a>
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
+              </Link>
             ))}
 
-            {/* Conditional Dashboard link */}
+            {/* Conditional Dashboard Link */}
             {user && (
-              <a
-                href="/dashboard"
-                className="text-base font-semibold text-gray-200 transition-all duration-200 hover:text-white"
+              <Link
+                to="/dashboard"
+                className="text-base font-semibold text-gray-200 transition-all duration-300 hover:text-white hover:scale-105 relative group"
               >
                 Dashboard
-              </a>
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
+              </Link>
             )}
 
-            {/* User Dropdown */}
+            {/* User Section */}
             {user ? (
-              <div className="relative">
-                <img
-                  src={user.photoURL || "/default-avatar.png"}
-                  alt="profile"
+              <div className="relative dropdown-container ml-4">
+                <button
                   onClick={() => setDropdown(!dropdown)}
-                  className="w-10 h-10 rounded-full cursor-pointer border-2 border-gray-600 hover:border-orange-500 transition"
-                />
+                  className="flex items-center space-x-3 focus:outline-none group"
+                >
+                  <img
+                    src={user.photoURL || "/default-avatar.png"}
+                    alt={user.displayName || "User"}
+                    className="w-10 h-10 rounded-full object-cover border-2 border-gray-600 group-hover:border-orange-500 transition-all duration-300 shadow-lg"
+                  />
+                  <svg
+                    className={`w-4 h-4 text-gray-400 transition-transform duration-300 ${
+                      dropdown ? "rotate-180" : ""
+                    }`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
 
                 <AnimatePresence>
                   {dropdown && (
                     <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
+                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
                       transition={{ duration: 0.2 }}
-                      className="absolute right-0 mt-3 w-48 bg-gray-900 text-gray-200 rounded-lg shadow-xl overflow-hidden"
+                      className="absolute right-0 mt-3 w-56 bg-gray-900/95 backdrop-blur-xl text-gray-200 rounded-2xl shadow-2xl overflow-hidden border border-white/10"
                     >
-                      <p className="px-4 py-3 text-sm font-semibold border-b border-gray-700">
-                        {user.displayName || "User"}
-                      </p>
+                      <div className="px-4 py-4 border-b border-gray-700/50">
+                        <p className="text-sm font-bold text-white truncate">
+                          {user.displayName || "User"}
+                        </p>
+                        <p className="text-xs text-gray-400 mt-1 truncate">
+                          {user.email}
+                        </p>
+                      </div>
 
                       <button
                         onClick={handleLogout}
-                        className="w-full text-left px-4 py-3 text-sm hover:bg-gray-800"
+                        className="w-full text-left px-4 py-3 text-sm font-semibold hover:bg-red-600/20 hover:text-red-400 transition-all duration-200 flex items-center space-x-2"
                       >
-                        Logout
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                        </svg>
+                        <span>Logout</span>
                       </button>
                     </motion.div>
                   )}
@@ -107,28 +146,51 @@ const Navbar = () => {
               </div>
             ) : (
               <Link
-                to={"/login"}
-                className="px-5 py-2.5 bg-orange-500 text-white font-semibold rounded-full hover:bg-orange-600 shadow-md shadow-orange-500/30"
+                to="/login"
+                className="ml-4 px-6 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold rounded-full hover:from-orange-600 hover:to-orange-700 shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50 transition-all duration-300 hover:scale-105"
               >
                 Login
               </Link>
             )}
-          </div>
+          </nav>
 
-          {/* Mobile Hamburger */}
+          {/* Mobile Hamburger Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="inline-flex p-2 text-white rounded-md lg:hidden hover:bg-gray-800"
+            className="inline-flex items-center justify-center p-2 text-white rounded-lg lg:hidden hover:bg-white/10 focus:outline-none transition-colors duration-200"
+            aria-label="Toggle menu"
           >
-            {isOpen ? (
-              <svg className="w-6 h-6" fill="none" stroke="currentColor">
-                <path strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            ) : (
-              <svg className="w-6 h-6" fill="none" stroke="currentColor">
-                <path strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" />
-              </svg>
-            )}
+            <AnimatePresence mode="wait">
+              {isOpen ? (
+                <motion.svg
+                  key="close"
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </motion.svg>
+              ) : (
+                <motion.svg
+                  key="menu"
+                  initial={{ rotate: 90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: -90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </motion.svg>
+              )}
+            </AnimatePresence>
           </button>
         </div>
       </div>
@@ -140,48 +202,70 @@ const Navbar = () => {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="lg:hidden bg-black/90 text-gray-200 backdrop-blur-lg shadow-xl"
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="lg:hidden bg-gray-900/95 backdrop-blur-xl border-t border-white/10 shadow-2xl overflow-hidden"
           >
-            <div className="flex flex-col px-4 pt-4 pb-6 space-y-4">
+            <nav className="px-4 py-6 space-y-2">
               {navLinks.map((link, idx) => (
-                <a
+                <Link
                   key={idx}
-                  href={link.href}
-                  className="text-base font-semibold hover:text-orange-400"
+                  to={link.href}
+                  onClick={() => setIsOpen(false)}
+                  className="block px-4 py-3 text-base font-semibold text-gray-200 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200"
                 >
                   {link.name}
-                </a>
+                </Link>
               ))}
 
               {user && (
-                <a
-                  href="/dashboard"
-                  className="text-base font-semibold hover:text-orange-400"
+                <Link
+                  to="/dashboard"
+                  onClick={() => setIsOpen(false)}
+                  className="block px-4 py-3 text-base font-semibold text-gray-200 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200"
                 >
                   Dashboard
-                </a>
-              )}
-
-              {user ? (
-                <>
-                  <p className="text-sm font-semibold">{user.displayName}</p>
-                  <button
-                    onClick={handleLogout}
-                    className="px-4 py-2 text-sm rounded bg-orange-600 hover:bg-orange-700"
-                  >
-                    Logout
-                  </button>
-                </>
-              ) : (
-                <Link
-                  to={"/login"}
-                  className="px-4 py-2 text-sm rounded bg-orange-600 hover:bg-orange-700"
-                >
-                  Login
                 </Link>
               )}
-            </div>
+
+              <div className="pt-4 mt-4 border-t border-gray-700/50">
+                {user ? (
+                  <div className="space-y-3">
+                    <div className="flex items-center space-x-3 px-4 py-2">
+                      <img
+                        src={user.photoURL || "/default-avatar.png"}
+                        alt={user.displayName || "User"}
+                        className="w-10 h-10 rounded-full object-cover border-2 border-orange-500"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-bold text-white truncate">
+                          {user.displayName || "User"}
+                        </p>
+                        <p className="text-xs text-gray-400 truncate">
+                          {user.email}
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full px-4 py-3 text-sm font-bold text-white bg-red-600 hover:bg-red-700 rounded-lg transition-all duration-200 flex items-center justify-center space-x-2"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                      </svg>
+                      <span>Logout</span>
+                    </button>
+                  </div>
+                ) : (
+                  <Link
+                    to="/login"
+                    onClick={() => setIsOpen(false)}
+                    className="block w-full px-4 py-3 text-sm font-bold text-center text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 rounded-lg shadow-lg transition-all duration-200"
+                  >
+                    Login
+                  </Link>
+                )}
+              </div>
+            </nav>
           </motion.div>
         )}
       </AnimatePresence>

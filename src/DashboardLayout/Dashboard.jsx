@@ -67,7 +67,7 @@ const Dashboard = () => {
       { to: "declare-winner", label: "Declare Winner", icon: TrophyIcon },
     ],
     user: [
-      { to: "/all-contest", label: "My Winning Contests", icon: TrophyIcon },
+      { to: "my-wining-contests", label: "My Winning Contests", icon: TrophyIcon },
       { to: "my-participation", label: "My Participation", icon: HomeIcon },
       { to: "my-profile", label: "My Profile", icon: UserCircleIcon },
     ],
@@ -164,13 +164,13 @@ const Dashboard = () => {
                 <NextChampLogo />
               </span>
               <span className="hidden lg:inline text-lg font-bold">
-                {role} Dashboard
+                
               </span>
             </Link>
           </div>
 
           <h2 className="text-lg font-semibold capitalize lg:hidden">
-            {role} Dashboard
+            
           </h2>
 
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
