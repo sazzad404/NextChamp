@@ -28,6 +28,7 @@ import SeeSubmissions from "./pages/CreatorPage/SeeSubmissions.jsx";
 import DeclareWinner from "./pages/CreatorPage/DeclareWinner.jsx";
 import Error404 from "./components/ErrorPage.jsx";
 import SupportSection from "./components/SupportSection.jsx";
+import PrivateRoute from "./pages/PrivateRoute/PrivateRoute.jsx";
 
 const router = createBrowserRouter([
   {
@@ -56,21 +57,29 @@ const router = createBrowserRouter([
       },
       {
         path: "/contest-details/:id",
-        Component: ContestDetails,
+        element: (
+          <PrivateRoute>
+            <ContestDetails></ContestDetails>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/payment/:id",
         Component: Payment,
       },
       {
-        path: 'support-section',
-        Component: SupportSection
-      }
+        path: "support-section",
+        Component: SupportSection,
+      },
     ],
   },
   {
     path: "/dashboard",
-    Component: Dashboard,
+    element: (
+      <PrivateRoute>
+        <Dashboard></Dashboard>
+      </PrivateRoute>
+    ),
     children: [
       {
         index: true,
