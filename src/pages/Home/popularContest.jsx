@@ -173,7 +173,7 @@ const PopularContest = () => {
   </div>
 ) : (
   <Link to={`/contest-details/${contest._id}`} className="block">
-    <button className="w-full py-4 sm:py-5 lg:py-6 text-lg sm:text-xl font-bold text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 rounded-2xl shadow-xl hover:shadow-purple-500/40 transition-all duration-500 flex items-center justify-center gap-3 sm:gap-4 group hover:scale-[1.02] active:scale-[0.98] overflow-hidden">
+    <button className="w-full py-3 sm:py-5 lg:py-4 text-lg sm:text-xl font-bold text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 rounded-2xl shadow-xl hover:shadow-purple-500/40 transition-all duration-500 flex items-center justify-center gap-3 sm:gap-4 group hover:scale-[1.02] active:scale-[0.98] overflow-hidden">
       <span className="truncate px-2">Join Now</span>
       <svg
         className="w-6 h-6 sm:w-7 sm:h-7 flex-shrink-0 transition-transform group-hover:translate-x-4 duration-500"

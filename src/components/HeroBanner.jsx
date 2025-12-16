@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import useDebounce from "../hooks/useDebounce";
+import { AuthContext } from "../Provider/AuthProvider";
+import { MdOutlineExplore } from "react-icons/md";
+import { HiOutlineArrowRightStartOnRectangle } from "react-icons/hi2";
 
 const HeroBanner = () => {
+  const { user } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
@@ -42,6 +46,7 @@ const HeroBanner = () => {
 
   const { data: contests = [], isLoading } = useQuery({
     queryKey: ["contests", debouncedSearch],
+    enabled: !!debouncedSearch,
     queryFn: async () => {
       const res = await axiosSecure.get(
         `/contests${debouncedSearch ? `?search=${debouncedSearch}` : ""}`
@@ -51,7 +56,7 @@ const HeroBanner = () => {
   });
 
   return (
-    <div className="relative pt-48 pb-12 h-270 xl:pt-60 sm:pb-16 lg:pb-32 xl:pb-48 2xl:pb-56">
+    <div className="relative h-[70vh]  min-h-[500px] pt-32 pb-12 flex items-center">
       {/* Slider Background */}
       <div className="absolute inset-0 overflow-hidden">
         <AnimatePresence mode="wait" initial={false}>
@@ -67,7 +72,7 @@ const HeroBanner = () => {
               duration: 1.2,
               ease: [0.25, 0.1, 0.25, 1],
             }}
-            className="object-cover w-full h-full"
+            className="object-cover w-full h-full brightness-75"
           />
         </AnimatePresence>
 
@@ -107,12 +112,51 @@ const HeroBanner = () => {
                 />
               </div>
             </div>
+            {/* CTA BUTTONS */}
+            <motion.div
+              className="mt-10 flex flex-wrap gap-6 items-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+            >
+              {/* Explore Contests */}
+              <motion.button
+                whileHover={{ scale: 1.06 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 flex items-center gap-2 py-4 rounded-full bg-orange-500 text-white font-semibold text-lg shadow-xl hover:shadow-orange-500/40 transition-all"
+                onClick={() => navigate("/all-contest")}
+              >
+                <MdOutlineExplore size={24} />
+                Explore Context
+              </motion.button>
+
+              {/* Get Started – only for non-logged users */}
+              {!user && (
+                <motion.button
+                  whileHover={{ scale: 1.06 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-8 py-4 flex items-center gap-2 rounded-full 
+             text-white font-semibold text-lg relative border-2 border-transparent 
+             overflow-hidden transition-all shadow-lg hover:shadow-2xl
+             before:absolute before:inset-0 before:rounded-full before:border-2 
+             before:border-gradient-to-r before:from-blue-800 before:to-cyan-800 before:animate-pulse"
+                  onClick={() => navigate("/register")}
+                >
+                  <HiOutlineArrowRightStartOnRectangle size={24} />
+                  Get Start
+                </motion.button>
+              )}
+            </motion.div>
 
             {/* Contest Cards */}
             <div className="mt-8">
-              {isLoading && <p className="text-white/90 text-lg">Loading contests...</p>}
+              {isLoading && (
+                <p className="text-white/90 text-lg">Loading contests...</p>
+              )}
               {!isLoading && contests.length === 0 && debouncedSearch && (
-                <p className="text-white/90 text-lg">No contests found for "{debouncedSearch}"</p>
+                <p className="text-white/90 text-lg">
+                  No contests found for "{debouncedSearch}"
+                </p>
               )}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
                 {contests.map((contest) => (
@@ -121,8 +165,12 @@ const HeroBanner = () => {
                     onClick={() => handleContestClick(contest._id)}
                     className="bg-white/95 backdrop-blur-md rounded-2xl p-6 shadow-xl hover:shadow-2xl cursor-pointer transition-all duration-300 hover:scale-[1.03] border border-white/20"
                   >
-                    <h3 className="font-bold text-xl text-black">{contest.name}</h3>
-                    <p className="text-gray-700 text-base mt-2">{contest.type || contest.category}</p>
+                    <h3 className="font-bold text-xl text-black">
+                      {contest.name}
+                    </h3>
+                    <p className="text-gray-700 text-base mt-2">
+                      {contest.type || contest.category}
+                    </p>
                   </div>
                 ))}
               </div>

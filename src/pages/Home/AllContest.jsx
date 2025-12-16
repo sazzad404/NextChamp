@@ -37,7 +37,7 @@ const AllContest = () => {
   }
 
   return (
-    <div className="min-h-screen rounded-3xl bg-gray-950 py-20 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen rounded-3xl bg-gray-950 py-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
