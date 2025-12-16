@@ -10,6 +10,8 @@ import {
   UserCircle,
 } from "lucide-react";
 import { Link } from "react-router-dom"; // ✅ use react-router-dom
+import FeaturesSection from "../../components/FeaturesSection";
+import FeedbackSection from "../../components/FeedbackSection";
 
 const AllContest = () => {
   const axiosSecure = useAxiosSecure();
@@ -176,6 +178,8 @@ const AllContest = () => {
           </div>
         )}
       </div>
+      <FeaturesSection/>
+      <FeedbackSection/>
     </div>
   );
 };

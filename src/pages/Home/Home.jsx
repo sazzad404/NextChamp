@@ -7,6 +7,7 @@ import HowItWorksSection from "../../components/HowItWorkSection";
 import UpcomingContest from "../../components/UpcomingContest";
 import SponsorsSection from "../../components/SponsorsSection ";
 import WinnerAdSctions from "../../components/WinnerAdSctions";
+import FeedbackSection from "../../components/FeedbackSection";
 
 const Home = () => {
   return (
@@ -17,6 +18,7 @@ const Home = () => {
       <PopularContest></PopularContest>
       <WinnerAdSctions></WinnerAdSctions>
       <HowItWorksSection></HowItWorksSection>
+      <FeedbackSection></FeedbackSection>
       <UpcomingContest></UpcomingContest>
       <SponsorsSection></SponsorsSection>
     </div>

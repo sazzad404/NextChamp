@@ -46,7 +46,7 @@ const SupportSection = () => {
             We're Here to Help
           </h2>
           <p className="mt-6 text-lg text-zinc-400 max-w-3xl mx-auto">
-            Got questions about contests, submissions, prizes, or anything else? 
+            Got questions about contests, submissions, prizes, or anything else?
             Our support team is ready to assist you 24/7.
           </p>
         </motion.div>
@@ -62,8 +62,18 @@ const SupportSection = () => {
             className="bg-zinc-900/60 backdrop-blur-md border border-zinc-800 rounded-2xl p-8 text-center hover:border-indigo-500/50 transition-all duration-300"
           >
             <div className="w-20 h-20 mx-auto bg-indigo-500/20 rounded-full flex items-center justify-center mb-6">
-              <svg className="w-10 h-10 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L3 12V6a2 2 0 012-2h14a2 2 0 012 2v6" />
+              <svg
+                className="w-10 h-10 text-indigo-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L3 12V6a2 2 0 012-2h14a2 2 0 012 2v6"
+                />
               </svg>
             </div>
             <h3 className="text-2xl font-bold text-white">Live Chat</h3>
@@ -82,14 +92,27 @@ const SupportSection = () => {
             className="bg-zinc-900/60 backdrop-blur-md border border-zinc-800 rounded-2xl p-8 text-center hover:border-indigo-500/50 transition-all duration-300"
           >
             <div className="w-20 h-20 mx-auto bg-indigo-500/20 rounded-full flex items-center justify-center mb-6">
-              <svg className="w-10 h-10 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              <svg
+                className="w-10 h-10 text-indigo-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                />
               </svg>
             </div>
             <h3 className="text-2xl font-bold text-white">Email Us</h3>
             <p className="mt-4 text-zinc-400">Response within 24 hours</p>
-            <a href="mailto:support@yourcontest.com" className="mt-8 inline-block px-8 py-3 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition">
-              support@yourcontest.com
+            <a
+              href="mailto:sazzadhasan313@gmail.com"
+              className="mt-8 inline-block px-8 py-3 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition"
+            >
+              sazzadhasan313@gmail.com
             </a>
           </motion.div>
 
@@ -102,8 +125,18 @@ const SupportSection = () => {
             className="bg-zinc-900/60 backdrop-blur-md border border-zinc-800 rounded-2xl p-8 text-center hover:border-indigo-500/50 transition-all duration-300"
           >
             <div className="w-20 h-20 mx-auto bg-indigo-500/20 rounded-full flex items-center justify-center mb-6">
-              <svg className="w-10 h-10 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              <svg
+                className="w-10 h-10 text-indigo-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
               </svg>
             </div>
             <h3 className="text-2xl font-bold text-white">Help Center</h3>
@@ -116,7 +149,9 @@ const SupportSection = () => {
 
         {/* FAQ Accordion */}
         <div className="mt-20 lg:mt-32 max-w-4xl mx-auto">
-          <h3 className="text-3xl font-bold text-white text-center mb-12">Frequently Asked Questions</h3>
+          <h3 className="text-3xl font-bold text-white text-center mb-12">
+            Frequently Asked Questions
+          </h3>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
               <motion.div
@@ -131,10 +166,26 @@ const SupportSection = () => {
                   onClick={() => toggleFAQ(index)}
                   className="w-full px-8 py-6 text-left flex justify-between items-center hover:bg-zinc-800/50 transition"
                 >
-                  <span className="text-lg font-medium text-white">{faq.q}</span>
-                  <span className={`text-indigo-400 transition-transform ${openFAQ === index ? "rotate-180" : ""}`}>
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  <span className="text-lg font-medium text-white">
+                    {faq.q}
+                  </span>
+                  <span
+                    className={`text-indigo-400 transition-transform ${
+                      openFAQ === index ? "rotate-180" : ""
+                    }`}
+                  >
+                    <svg
+                      className="w-6 h-6"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                      />
                     </svg>
                   </span>
                 </button>
