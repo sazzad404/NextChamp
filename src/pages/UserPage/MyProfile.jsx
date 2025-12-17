@@ -1,9 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { motion, AnimatePresence } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { Doughnut } from "react-chartjs-2";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import Loader from "../../components/Loader";
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const MyProfile = () => {
   const { user } = useContext(AuthContext);
+  const axiosSecure = useAxiosSecure();
   const [isOpen, setIsOpen] = useState(false);
 
   // Editable profile state
@@ -15,10 +23,13 @@ const MyProfile = () => {
     phone: "",
   });
 
+  // Load profile from localStorage or default
   useEffect(() => {
     if (user) {
       const storageKey = `my-profile-${user.email}`;
-      const savedProfile = JSON.parse(localStorage.getItem(storageKey) || "null");
+      const savedProfile = JSON.parse(
+        localStorage.getItem(storageKey) || "null"
+      );
 
       if (savedProfile) {
         setProfile(savedProfile);
@@ -34,11 +45,48 @@ const MyProfile = () => {
     }
   }, [user]);
 
-  // Save profile
+  // Save profile to localStorage
   const handleSave = () => {
     const storageKey = `my-profile-${user.email}`;
     localStorage.setItem(storageKey, JSON.stringify(profile));
     setIsOpen(false);
+  };
+
+  // Fetch participated contests
+  const { data: participated = [], isLoading: loadingParticipated } = useQuery({
+    queryKey: ["my-participation", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/my-participation/${user.email}`);
+      return res.data;
+    },
+    enabled: !!user?.email,
+  });
+
+  // Fetch winning contests
+  const { data: winnings = [], isLoading: loadingWinnings } = useQuery({
+    queryKey: ["my-winnings", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/my-winnings-contest");
+      return res.data.filter((contest) =>
+        contest.winner?.some((w) => w.email === user?.email)
+      );
+    },
+    enabled: !!user?.email,
+  });
+
+  const totalParticipated = participated?.length || 0;
+  const totalWon = winnings?.length || 0;
+
+  const doughnutData = {
+    labels: ["Won", "Lost"],
+    datasets: [
+      {
+        label: "Win Percentage",
+        data: [totalWon, totalParticipated - totalWon],
+        backgroundColor: ["#10B981", "#EF4444"], // Green for win, Red for lost
+        hoverOffset: 4,
+      },
+    ],
   };
 
   if (!user) {
@@ -49,8 +97,12 @@ const MyProfile = () => {
     );
   }
 
+  if (loadingParticipated || loadingWinnings) {
+    return <Loader />;
+  }
+
   return (
-    <section className="w-full  ">
+    <section className="w-full">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
         {/* Header */}
         <motion.div
@@ -101,27 +153,7 @@ const MyProfile = () => {
                   </p>
                 </div>
 
-                {/* Badges */}
-                <div className="flex flex-wrap justify-center lg:justify-start gap-3 sm:gap-4">
-                  <motion.span
-                    whileHover={{ scale: 1.05 }}
-                    className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-cyan-500/20 text-cyan-300 font-medium border border-cyan-500/50 text-sm sm:text-base"
-                  >
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    Active Member
-                  </motion.span>
-                  <motion.span
-                    whileHover={{ scale: 1.05 }}
-                    className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-emerald-500/20 text-emerald-300 font-medium border border-emerald-500/50 text-sm sm:text-base"
-                  >
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    Verified
-                  </motion.span>
-                </div>
+                {/* Win Percentage Chart */}
 
                 {/* Bio */}
                 <div className="bg-gray-800/50 rounded-xl p-4 sm:p-6 border border-gray-700/30">
@@ -135,77 +167,9 @@ const MyProfile = () => {
                     </p>
                   )}
                 </div>
-
-                {/* Contact Details Grid */}
-                {(profile.address || profile.phone) && (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 pt-6 border-t border-gray-700/50">
-                    {profile.address && (
-                      <motion.div
-                        whileHover={{ scale: 1.02 }}
-                        className="flex items-start gap-3 sm:gap-4 p-4 rounded-xl bg-gray-800/30 border border-gray-700/30"
-                      >
-                        <svg
-                          className="w-5 h-5 sm:w-6 sm:h-6 text-cyan-400 mt-1 shrink-0"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                          />
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                          />
-                        </svg>
-                        <div className="min-w-0 flex-1">
-                          <p className="text-xs sm:text-sm uppercase tracking-wider text-gray-500 mb-1">
-                            Address
-                          </p>
-                          <p className="text-white font-medium text-sm sm:text-base break-words">
-                            {profile.address}
-                          </p>
-                        </div>
-                      </motion.div>
-                    )}
-                    {profile.phone && (
-                      <motion.div
-                        whileHover={{ scale: 1.02 }}
-                        className="flex items-start gap-3 sm:gap-4 p-4 rounded-xl bg-gray-800/30 border border-gray-700/30"
-                      >
-                        <svg
-                          className="w-5 h-5 sm:w-6 sm:h-6 text-cyan-400 mt-1 shrink-0"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1a31.23 31.23 0 01-13.636-3.636A31.23 31.23 0 013 5z"
-                          />
-                        </svg>
-                        <div className="min-w-0 flex-1">
-                          <p className="text-xs sm:text-sm uppercase tracking-wider text-gray-500 mb-1">
-                            Phone
-                          </p>
-                          <p className="text-white font-medium text-sm sm:text-base break-words">
-                            {profile.phone}
-                          </p>
-                        </div>
-                      </motion.div>
-                    )}
-                  </div>
-                )}
               </div>
 
-              {/* Edit Button - Responsive positioning */}
+              {/* Edit Button */}
               <div className="w-full lg:w-auto lg:shrink-0 flex justify-center lg:justify-start">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
@@ -213,12 +177,7 @@ const MyProfile = () => {
                   onClick={() => setIsOpen(true)}
                   className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-bold text-base sm:text-lg hover:from-cyan-400 hover:to-blue-400 transition-all duration-300 shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50"
                 >
-                  <span className="flex items-center justify-center gap-2">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                    </svg>
-                    Edit Profile
-                  </span>
+                  Edit Profile
                 </motion.button>
               </div>
             </div>
@@ -358,6 +317,21 @@ const MyProfile = () => {
           </motion.div>
         )}
       </AnimatePresence>
+      <div className="mt-6 bg-gray-800/50 p-6 rounded-xl border border-gray-700/30 text-center">
+        <h3 className="text-white font-bold mb-4">Win Percentage</h3>
+        {totalParticipated > 0 ? (
+          <Doughnut data={doughnutData} />
+        ) : (
+          <p className="text-gray-400">
+            You haven't participated in any contests yet.
+          </p>
+        )}
+        {totalParticipated > 0 && (
+          <p className="text-gray-300 mt-2 text-sm">
+            {totalWon} Wins / {totalParticipated} Participated
+          </p>
+        )}
+      </div>
     </section>
   );
 };
