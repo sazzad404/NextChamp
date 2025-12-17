@@ -18,7 +18,7 @@ const MyWinningContest = () => {
   } = useQuery({
     queryKey: ["my-winnings", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get("/contests");
+      const res = await axiosSecure.get("/my-winnings-contest");
       return res.data.filter((contest) =>
         contest.winner?.some((w) => w.email === user?.email)
       );

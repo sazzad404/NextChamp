@@ -4,7 +4,7 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { Link } from "react-router";
-import Loader from "../../components/Loader";
+
 
 const MyContests = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,14 +20,14 @@ const MyContests = () => {
     queryKey: ["my-contests", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(
-        `/contests?creatorEmail=${user?.email}`
+        `/my-contests?creatorEmail=${user?.email}`
       );
       return res.data;
     },
     enabled: !!user?.email,
   });
 
-  if (isLoading) return <Loader></Loader>
+
 
   if (contests.length === 0) return <p>No Contest Yet</p>;
   const handleUpdateContest = (e) => {

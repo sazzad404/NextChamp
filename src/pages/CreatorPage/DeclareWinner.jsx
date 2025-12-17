@@ -16,7 +16,7 @@ const DeclareWinner = () => {
   const selectedEmail = useWatch({ control, name: "email" });
 
   useEffect(() => {
-    axiosSecure.get(`/contests?creatorEmail=${user?.email}`).then((res) => {
+    axiosSecure.get(`/my-contests?creatorEmail=${user?.email}`).then((res) => {
       const approvedContest = res.data.filter((c) => c.status === "approved");
       setContests(approvedContest);
     });

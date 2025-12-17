@@ -27,10 +27,6 @@ const PopularContest = () => {
     .sort((a, b) => b.prize - a.prize)
     .sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
 
-  if (isLoading) {
-    return <Loader></Loader>
-  }
-
   return (
     <div className="min-h-screen  bg-gray-950 py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -45,6 +41,19 @@ const PopularContest = () => {
         </div>
 
         {/* Grid */}
+        {isLoading ? (
+          // <Loader text="Loading contests..." />
+          <p>Loading......</p>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {approvedContests.map((contest, ) => (
+              <div key={contest._id} className="group relative ...">
+                {/* Card Content */}
+              </div>
+            ))}
+          </div>
+        )}
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {approvedContests.map((contest, index) => (
             <div
@@ -138,55 +147,61 @@ const PopularContest = () => {
                 </div>
 
                 {/* Button Conditional */}
-               {contest.winner?.length > 0 ? (
-  <div className="grid grid-cols-2 gap-3 sm:gap-4">
-    {/* Disabled Button */}
-    <button 
-      disabled
-      className="py-3 sm:py-3.5 lg:py-4 text-base sm:text-lg font-bold text-gray-400 bg-gray-800/80 rounded-xl shadow-md cursor-not-allowed opacity-70 border border-gray-700 truncate"
-    >
-      Winner Selected
-    </button>
-    
-    {/* Show Details Button - Fixed Overflow */}
-    <Link to={`/contest-details/${contest._id}`} className="block">
-      <button className="w-full py-3 sm:py-3.5 lg:py-4 text-base sm:text-lg font-bold text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 rounded-xl shadow-lg hover:shadow-purple-500/30 transition-all duration-300 flex items-center justify-center gap-2 sm:gap-3 group overflow-hidden">
-        <span className="truncate px-2">Show Details</span>
-        <svg
-          className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0 transition-transform group-hover:translate-x-3 duration-300"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M9 5l7 7-7 7"
-          />
-        </svg>
-      </button>
-    </Link>
-  </div>
-) : (
-  <Link to={`/contest-details/${contest._id}`} className="block">
-    <button className="w-full py-3 sm:py-5 lg:py-4 text-lg sm:text-xl font-bold text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 rounded-2xl shadow-xl hover:shadow-purple-500/40 transition-all duration-500 flex items-center justify-center gap-3 sm:gap-4 group hover:scale-[1.02] active:scale-[0.98] overflow-hidden">
-      <span className="truncate px-2">Join Now</span>
-      <svg
-        className="w-6 h-6 sm:w-7 sm:h-7 flex-shrink-0 transition-transform group-hover:translate-x-4 duration-500"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="strokeWidth={2.5}"
-          d="M9 5l7 7-7 7"
-        />
-      </svg>
-    </button>
-  </Link>
-)}
+                {contest.winner?.length > 0 ? (
+                  <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                    {/* Disabled Button */}
+                    <button
+                      disabled
+                      className="py-3 sm:py-3.5 lg:py-4 text-base sm:text-lg font-bold text-gray-400 bg-gray-800/80 rounded-xl shadow-md cursor-not-allowed opacity-70 border border-gray-700 truncate"
+                    >
+                      Winner Selected
+                    </button>
+
+                    {/* Show Details Button - Fixed Overflow */}
+                    <Link
+                      to={`/contest-details/${contest._id}`}
+                      className="block"
+                    >
+                      <button className="w-full py-3 sm:py-3.5 lg:py-4 text-base sm:text-lg font-bold text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 rounded-xl shadow-lg hover:shadow-purple-500/30 transition-all duration-300 flex items-center justify-center gap-2 sm:gap-3 group overflow-hidden">
+                        <span className="truncate px-2">Show Details</span>
+                        <svg
+                          className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0 transition-transform group-hover:translate-x-3 duration-300"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 5l7 7-7 7"
+                          />
+                        </svg>
+                      </button>
+                    </Link>
+                  </div>
+                ) : (
+                  <Link
+                    to={`/contest-details/${contest._id}`}
+                    className="block"
+                  >
+                    <button className="w-full py-3 sm:py-5 lg:py-4 text-lg sm:text-xl font-bold text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 rounded-2xl shadow-xl hover:shadow-purple-500/40 transition-all duration-500 flex items-center justify-center gap-3 sm:gap-4 group hover:scale-[1.02] active:scale-[0.98] overflow-hidden">
+                      <span className="truncate px-2">Join Now</span>
+                      <svg
+                        className="w-6 h-6 sm:w-7 sm:h-7 flex-shrink-0 transition-transform group-hover:translate-x-4 duration-500"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="strokeWidth={2.5}"
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </button>
+                  </Link>
+                )}
               </div>
 
               {/* Subtle ring */}

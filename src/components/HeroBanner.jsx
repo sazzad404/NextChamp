@@ -7,7 +7,6 @@ import useDebounce from "../hooks/useDebounce";
 import { AuthContext } from "../Provider/AuthProvider";
 import { MdOutlineExplore } from "react-icons/md";
 import { HiOutlineArrowRightStartOnRectangle } from "react-icons/hi2";
-import Loader from "./Loader";
 
 const HeroBanner = () => {
   const { user } = useContext(AuthContext);
@@ -194,11 +193,7 @@ const HeroBanner = () => {
             className="absolute bottom-4 left-0 right-0 px-4 sm:px-6 lg:px-8 max-h-[35vh] overflow-y-auto"
           >
             <div className="max-w-7xl mx-auto">
-              {isLoading && (
-                <div className="flex justify-center py-4">
-                  <Loader />
-                </div>
-              )}
+            
               
               {!isLoading && contests.length === 0 && (
                 <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-4 text-center">
