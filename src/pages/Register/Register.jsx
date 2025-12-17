@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Register = () => {
   const { createUser, updateUser, googleAuthProvider } =
@@ -20,6 +21,7 @@ const Register = () => {
     reset,
   } = useForm();
 
+  const axiosSecure = useAxiosSecure()
   // -------------------------
   // HANDLE FORM SUBMIT
   // -------------------------
@@ -53,7 +55,7 @@ const Register = () => {
         email: data.email,
         photoURL: photoURL,
       };
-      await axios.post("http://localhost:3000/users", user);
+      await axiosSecure.post("/users", user);
 
       // Success feedback
       Swal.fire({
@@ -89,7 +91,7 @@ const Register = () => {
       };
 
       // 3️⃣ Save to DB (upsert)
-      await axios.post("http://localhost:3000/users", userForDB);
+      await axiosSecure.post("/users", userForDB);
 
       // 4️⃣ Feedback & navigate
       Swal.fire("Success!", "Logged in with Google!", "success");

@@ -19,6 +19,8 @@ import {
 
 import NextChampLogo from "../components/NextChampLogo";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import Loader from "../components/Loader";
 
 const Dashboard = () => {
   const { user, logOut, isdark, setIsdark } = useContext(AuthContext);
@@ -26,12 +28,13 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
+  const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
     if (user) {
       setLoading(true);
-      axios
-        .get(`http://localhost:3000/users?email=${user.email}`)
+      axiosSecure
+        .get(`/users?email=${user.email}`)
         .then((res) => {
           setRole(res.data[0]?.role || "user");
         })
@@ -41,7 +44,7 @@ const Dashboard = () => {
       setRole("user");
       setLoading(false);
     }
-  }, [user]);
+  }, [axiosSecure, user]);
 
   const handleLogout = () => {
     logOut?.().then(() => {
@@ -57,7 +60,11 @@ const Dashboard = () => {
   const menu = {
     admin: [
       { to: "/dashboard", label: "Home", icon: HomeIcon },
-      { to: "approve-contest", label: "Approve Contests", icon: CheckCircleIcon },
+      {
+        to: "approve-contest",
+        label: "Approve Contests",
+        icon: CheckCircleIcon,
+      },
       { to: "manage-users", label: "Manage Users", icon: ShieldCheckIcon },
     ],
     creator: [
@@ -67,7 +74,11 @@ const Dashboard = () => {
       { to: "declare-winner", label: "Declare Winner", icon: TrophyIcon },
     ],
     user: [
-      { to: "my-wining-contests", label: "My Winning Contests", icon: TrophyIcon },
+      {
+        to: "my-wining-contests",
+        label: "My Winning Contests",
+        icon: TrophyIcon,
+      },
       { to: "my-participation", label: "My Participation", icon: HomeIcon },
       { to: "my-profile", label: "My Profile", icon: UserCircleIcon },
     ],
@@ -75,13 +86,7 @@ const Dashboard = () => {
 
   const navItems = menu[role] || menu.user;
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-950">
-        <span className="loading loading-spinner loading-lg text-primary"></span>
-      </div>
-    );
-  }
+  
 
   return (
     <div className="min-h-screen bg-gray-950 text-gray-100 flex">
@@ -163,15 +168,11 @@ const Dashboard = () => {
               <span className="lg:hidden">
                 <NextChampLogo />
               </span>
-              <span className="hidden lg:inline text-lg font-bold">
-                
-              </span>
+              <span className="hidden lg:inline text-lg font-bold"></span>
             </Link>
           </div>
 
-          <h2 className="text-lg font-semibold capitalize lg:hidden">
-            
-          </h2>
+          <h2 className="text-lg font-semibold capitalize lg:hidden"></h2>
 
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
             <div className="w-11 h-11 rounded-full ring ring-primary ring-offset-2 ring-offset-gray-900 overflow-hidden">
@@ -240,9 +241,7 @@ const SidebarContent = ({
           const isActive = isHome
             ? currentPath === "/dashboard"
             : currentPath.startsWith(
-                item.to.startsWith("/")
-                  ? item.to
-                  : `/dashboard/${item.to}`
+                item.to.startsWith("/") ? item.to : `/dashboard/${item.to}`
               );
 
           return (
@@ -284,9 +283,7 @@ const SidebarContent = ({
             />
           </div>
           <div>
-            <p className="font-medium text-sm">
-              {user?.displayName || "User"}
-            </p>
+            <p className="font-medium text-sm">{user?.displayName || "User"}</p>
             <p className="text-xs text-gray-500 capitalize">{role} panel</p>
           </div>
         </div>

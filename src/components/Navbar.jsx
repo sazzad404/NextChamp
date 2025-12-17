@@ -5,6 +5,7 @@ import { AuthContext } from "../Provider/AuthProvider";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,10 +13,12 @@ const Navbar = () => {
   const [dbUser, setDbUser] = useState(null);
   const { user, logOut } = useContext(AuthContext);
 
+  const axiosSecure = useAxiosSecure()
+
   useEffect(() => {
     if (user?.email) {
-      axios
-        .get(`http://localhost:3000/users?email=${user.email}`)
+      axiosSecure
+        .get(`/users?email=${user.email}`)
         .then((res) => {
           setDbUser(res.data[0]);
         })

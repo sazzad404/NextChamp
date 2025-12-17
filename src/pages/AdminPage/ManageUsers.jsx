@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
+import Loader from "../../components/Loader";
 
 const ManageUsers = () => {
   const axiosSecure = useAxiosSecure();
@@ -20,9 +21,7 @@ const ManageUsers = () => {
   });
 
   if (isLoading)
-    return (
-      <p className="text-center py-10 text-gray-300">Loading users...</p>
-    );
+    return <Loader></Loader>
 
   if (users.length === 0)
     return (

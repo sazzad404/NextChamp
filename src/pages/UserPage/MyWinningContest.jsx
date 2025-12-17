@@ -4,6 +4,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { motion } from "framer-motion";
 import { Trophy, Calendar, DollarSign, Clock } from "lucide-react";
+import Loader from "../../components/Loader";
 
 const MyWinningContest = () => {
   const { user } = useContext(AuthContext);
@@ -34,11 +35,7 @@ const MyWinningContest = () => {
   }
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-        <div className="text-white text-2xl animate-pulse">Loading your wins...</div>
-      </div>
-    );
+    return <Loader></Loader>
   }
 
   if (isError) {

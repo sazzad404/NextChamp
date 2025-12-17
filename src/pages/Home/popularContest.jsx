@@ -9,6 +9,7 @@ import {
   UserCircle,
 } from "lucide-react";
 import { Link } from "react-router";
+import Loader from "../../components/Loader";
 
 const PopularContest = () => {
   const axiosSecure = useAxiosSecure();
@@ -27,11 +28,7 @@ const PopularContest = () => {
     .sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gray-950 flex items-center justify-center">
-        <span className="loading loading-spinner loading-lg text-purple-500"></span>
-      </div>
-    );
+    return <Loader></Loader>
   }
 
   return (

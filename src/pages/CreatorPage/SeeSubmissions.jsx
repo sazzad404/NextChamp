@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { useParams } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Loader from "../../components/Loader";
 
 const SeeSubmissions = () => {
   const { id } = useParams();
@@ -21,11 +22,7 @@ const SeeSubmissions = () => {
   });
 
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <span className="loading loading-spinner loading-lg text-purple-500"></span>
-      </div>
-    );
+    return <Loader></Loader>
   }
 
   if (error || !contest) {

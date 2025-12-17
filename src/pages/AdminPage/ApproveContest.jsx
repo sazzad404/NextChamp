@@ -3,6 +3,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
+import Loader from "../../components/Loader";
 
 const ApproveContest = () => {
   const axiosSecure = useAxiosSecure();
@@ -20,15 +21,7 @@ const ApproveContest = () => {
   });
 
   if (isLoading)
-    return (
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="text-center py-10 text-gray-300"
-      >
-        Loading contests...
-      </motion.p>
-    );
+    return <Loader></Loader>
 
   const handleApproveContest = (contest, action) => {
     axiosSecure.patch(`/contests/${contest._id}`, { status: action }).then((res) => {

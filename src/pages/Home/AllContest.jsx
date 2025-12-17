@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import FeaturesSection from "../../components/FeaturesSection";
 import FeedbackSection from "../../components/FeedbackSection";
 import { motion, AnimatePresence } from "framer-motion"; // ✅ framer-motion
+import Loader from "../../components/Loader";
 
 const AllContest = () => {
   const axiosSecure = useAxiosSecure();
@@ -50,11 +51,7 @@ const AllContest = () => {
   };
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gray-950 flex items-center justify-center">
-        <span className="loading loading-spinner loading-lg text-purple-500"></span>
-      </div>
-    );
+    return <Loader></Loader>
   }
 
   return (

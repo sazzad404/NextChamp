@@ -13,6 +13,7 @@ import {
   CheckCircle,
 } from "lucide-react";
 import { AuthContext } from "../../Provider/AuthProvider";
+import Loader from "../../components/Loader";
 
 const Payment = () => {
   const { id } = useParams();
@@ -69,11 +70,7 @@ const Payment = () => {
   const formatNumber = (num) => num.toString().padStart(2, "0");
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gray-950 flex items-center justify-center">
-        <span className="loading loading-spinner loading-lg text-purple-500"></span>
-      </div>
-    );
+    return <Loader></Loader>
   }
 
   if (error || !contest || Object.keys(contest).length === 0) {

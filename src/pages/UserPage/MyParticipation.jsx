@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { motion } from "framer-motion";
+import Loader from "../../components/Loader";
 
 const MyParticipation = () => {
   const { user } = useContext(AuthContext);
@@ -22,11 +23,7 @@ const MyParticipation = () => {
   });
 
   if (isLoading) {
-    return (
-      <div className="text-center py-32 text-gray-400 text-lg animate-pulse">
-        Loading your participated contests...
-      </div>
-    );
+    return <Loader></Loader>
   }
 
   const sortedContests = [...myParticipation].sort(

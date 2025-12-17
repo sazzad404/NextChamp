@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { motion } from "framer-motion";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import Loader from "./Loader";
 
 const WinnerAdSctions = () => {
   const axiosSecure = useAxiosSecure();
@@ -19,7 +20,7 @@ const WinnerAdSctions = () => {
   if (isLoading) {
     return (
       <div className="bg-gray-950 py-20 text-center text-gray-400">
-        Loading winners...
+        <Loader></Loader>
       </div>
     );
   }

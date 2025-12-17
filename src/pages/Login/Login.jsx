@@ -5,6 +5,7 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import { Link, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Login = () => {
   const { loginUser, googleAuthProvider } = useContext(AuthContext);
@@ -16,6 +17,7 @@ const Login = () => {
     formState: { errors },
     reset,
   } = useForm();
+  const axiosSecure = useAxiosSecure()
 
   // Handle Email/Password Login
   const onSubmit = async (data) => {
@@ -52,7 +54,7 @@ const Login = () => {
           photoURL: loggedUser.photoURL,
           role: "user",
         };
-        await axios.post("http://localhost:3000/users", userForDB);
+        await axiosSecure.post("/users", userForDB);
       } catch (dbErr) {
         console.log("DB insert error (ignored):", dbErr);
       }
