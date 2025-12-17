@@ -40,7 +40,7 @@ const MyWinningContest = () => {
 
   if (isError) {
     return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center text-red-400">
+      <div className="min-h-screen bg-gray-950 flex items-center justify-center text-red-400">
         <p>Error loading data: {error?.message || "Something went wrong"}</p>
       </div>
     );
@@ -48,7 +48,7 @@ const MyWinningContest = () => {
 
   if (winnings.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-900 flex flex-col items-center justify-center text-white px-4">
+      <div className=" bg-gray-950 flex flex-col items-center justify-center text-white px-4">
         <Trophy className="w-24 h-24 text-yellow-500 mb-8" />
         <h2 className="text-4xl font-bold mb-4">No Wins Yet!</h2>
         <p className="text-gray-400 text-center max-w-md">

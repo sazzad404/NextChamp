@@ -10,6 +10,7 @@ import {
 } from "firebase/auth";
 import React, { createContext, useEffect, useState } from "react";
 import { auth } from "../Firebase/firebase.init";
+import Loader from "../components/Loader";
 
 export const AuthContext = createContext();
 
@@ -54,9 +55,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const logOut = () => {
-
     return signOut(auth);
-    
   };
 
   // google auth

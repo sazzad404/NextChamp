@@ -24,7 +24,7 @@ const Navbar = () => {
         })
         .catch((err) => console.log(err));
     }
-  }, [user]);
+  }, [axiosSecure, user]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -235,7 +235,7 @@ const Navbar = () => {
                   <div className="space-y-3">
                     <div className="flex items-center space-x-3 px-4 py-2">
                       <img
-                        src={user.photoURL || "/default-avatar.png"}
+                        src={user?.photoURL || "/default-avatar.png"}
                         alt={user.displayName || "User"}
                         className="w-10 h-10 rounded-full object-cover border-2 border-orange-500"
                       />
