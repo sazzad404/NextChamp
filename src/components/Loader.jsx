@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 const Loader = ({ text = "Loading..." }) => {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-950">
+    <div className="flex items-center justify-center p-6 rounded-lg">
       <div className="flex flex-col items-center gap-6">
         {/* Outer Glow Ring */}
         <motion.div
@@ -12,8 +12,8 @@ const Loader = ({ text = "Loading..." }) => {
             duration: 1.6,
             ease: "linear",
           }}
-          className="w-24 h-24 rounded-full border-4 border-transparent 
-          border-t-blue-600 border-r-cyan-500 shadow-[0_0_40px_rgba(59,130,246,0.6)]"
+          className="w-16 h-16 rounded-full border-4 border-transparent 
+          border-t-blue-600 border-r-cyan-500 shadow-[0_0_25px_rgba(59,130,246,0.6)]"
         />
 
         {/* Inner Pulse Dot */}
@@ -24,7 +24,7 @@ const Loader = ({ text = "Loading..." }) => {
             duration: 1.2,
             ease: "easeInOut",
           }}
-          className="w-4 h-4 rounded-full bg-blue-500 shadow-[0_0_25px_rgba(59,130,246,0.8)]"
+          className="w-3 h-3 rounded-full bg-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.8)]"
         />
 
         {/* Text */}
@@ -34,7 +34,7 @@ const Loader = ({ text = "Loading..." }) => {
             repeat: Infinity,
             duration: 1.4,
           }}
-          className="text-sm tracking-widest uppercase text-gray-300"
+          className="text-xs tracking-widest uppercase text-gray-300"
         >
           {text}
         </motion.p>

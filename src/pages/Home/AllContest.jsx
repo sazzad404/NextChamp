@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react"; // ✅ useState added
+import React, { useEffect, useState } from "react"; // ✅ useState added
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import {
   Trophy,
@@ -30,6 +30,7 @@ const AllContest = () => {
     },
   });
 
+
   // Sort: First by prize descending, then deadline ascending
   const approvedContests = [...contests]
     .filter((c) => c.status === "approved")
@@ -51,7 +52,7 @@ const AllContest = () => {
   };
 
   if (isLoading) {
-    return <Loader></Loader>
+    <p className="mt-20">loading...</p>;
   }
 
   return (
@@ -63,7 +64,8 @@ const AllContest = () => {
             All Contests
           </h1>
           <p className="text-gray-400 text-lg">
-            Join the hottest competitions running right now! ({totalItems} total)
+            Join the hottest competitions running right now! ({totalItems}{" "}
+            total)
           </p>
         </div>
 
@@ -80,8 +82,7 @@ const AllContest = () => {
                 className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
               >
                 {paginatedContests.map((contest, index) => {
-                  const globalIndex =
-                    (currentPage - 1) * itemsPerPage + index; // for rank badge
+                  const globalIndex = (currentPage - 1) * itemsPerPage + index; // for rank badge
 
                   return (
                     <motion.div
@@ -150,7 +151,9 @@ const AllContest = () => {
                             <span className="font-semibold text-purple-400 flex items-center gap-1">
                               <Users size={15} /> Participants:
                             </span>
-                            <span>{contest.participants?.length || 0} people</span>
+                            <span>
+                              {contest.participants?.length || 0} people
+                            </span>
                           </div>
                         </div>
 
@@ -165,11 +168,14 @@ const AllContest = () => {
                           </div>
                           <div className="flex items-center gap-2 text-gray-300">
                             <CalendarDays size={18} />
-                            {new Date(contest.deadline).toLocaleDateString("en-GB", {
-                              day: "numeric",
-                              month: "short",
-                              year: "2-digit",
-                            })}
+                            {new Date(contest.deadline).toLocaleDateString(
+                              "en-GB",
+                              {
+                                day: "numeric",
+                                month: "short",
+                                year: "2-digit",
+                              }
+                            )}
                           </div>
                         </div>
 

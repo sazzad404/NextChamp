@@ -43,10 +43,10 @@ const PopularContest = () => {
         {/* Grid */}
         {isLoading ? (
           // <Loader text="Loading contests..." />
-          <p>Loading......</p>
+          <p>Loading...</p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {approvedContests.map((contest, ) => (
+            {approvedContests.map((contest) => (
               <div key={contest._id} className="group relative ...">
                 {/* Card Content */}
               </div>
