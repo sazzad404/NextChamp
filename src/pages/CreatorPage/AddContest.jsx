@@ -37,7 +37,7 @@ const AddContest = () => {
   };
 
   const onSubmit = (data) => {
-    console.log(data);
+
 
     const contest = {
       name: data.name,
@@ -55,7 +55,7 @@ const AddContest = () => {
     axiosSecure
       .post("/contests", contest)
       .then((res) => {
-        console.log(res);
+       
         if (res.data.insertedId) {
           showToast("Contest Added Successfully! 🎉");
           navigate("/dashboard/my-contests");

@@ -37,7 +37,7 @@ const AllContest = () => {
   const approvedContests = [...contests]
     .filter((c) => c.status === "approved")
     .sort((a, b) => b.prize - a.prize) // highest prize first
-    .sort((a, b) => new Date(a.deadline) - new Date(b.deadline)); // earliest deadline first
+    .sort((a, b) => new Date(a.deadline) - new Date(b.deadline)); 
 
   // Pagination logic
   const totalItems = approvedContests.length;
@@ -50,7 +50,7 @@ const AllContest = () => {
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    window.scrollTo({ top: 400, behavior: "smooth" }); // nice scroll to top of cards
+    window.scrollTo({ top: 400, behavior: "smooth" }); 
   };
 
   if (isLoading) {

@@ -25,10 +25,6 @@ const ContestDetails = () => {
   const [taskText, setTaskText] = useState("");
   const [isImageHovered, setIsImageHovered] = useState(false);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  });
-
   const {
     data: contest = {},
     isLoading,
@@ -77,12 +73,12 @@ const ContestDetails = () => {
   const formatNumber = (num) => num.toString().padStart(2, "0");
 
   if (isLoading) {
-    return <Loader></Loader>;
+     <Loader></Loader>;
   }
 
   if (error || !contest || Object.keys(contest).length === 0) {
     return (
-      <div className="min-h-screen bg-gray-950 flex items-center justify-center text-red-400 text-xl">
+      <div className="h-screen bg-gray-950 flex items-center justify-center text-red-400 text-xl">
         Contest not found or failed to load.
       </div>
     );
