@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion"; // subtle animation er jonno (optional, but joss lagbe)
 
 const SupportSection = () => {
   const [openFAQ, setOpenFAQ] = useState(null);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
 
   const faqs = [
     {

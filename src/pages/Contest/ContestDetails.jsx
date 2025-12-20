@@ -25,6 +25,10 @@ const ContestDetails = () => {
   const [taskText, setTaskText] = useState("");
   const [isImageHovered, setIsImageHovered] = useState(false);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
+
   const {
     data: contest = {},
     isLoading,
@@ -73,7 +77,7 @@ const ContestDetails = () => {
   const formatNumber = (num) => num.toString().padStart(2, "0");
 
   if (isLoading) {
-    return <Loader></Loader>
+    return <Loader></Loader>;
   }
 
   if (error || !contest || Object.keys(contest).length === 0) {
@@ -207,22 +211,33 @@ const ContestDetails = () => {
             <div className="bg-gray-800/50 backdrop-blur border border-gray-700 rounded-3xl p-8">
               {contestEnded ? (
                 <div className="text-center">
-                  <p className="text-4xl font-black text-red-500">Contest Ended</p>
-                  <p className="text-gray-400 mt-2">Waiting for winner announcement</p>
+                  <p className="text-4xl font-black text-red-500">
+                    Contest Ended
+                  </p>
+                  <p className="text-gray-400 mt-2">
+                    Waiting for winner announcement
+                  </p>
                 </div>
               ) : (
                 <>
                   <div className="flex items-center justify-center gap-3 mb-6">
                     <Clock size={32} className="text-yellow-400" />
-                    <h3 className="text-2xl font-bold text-white">Time Remaining</h3>
+                    <h3 className="text-2xl font-bold text-white">
+                      Time Remaining
+                    </h3>
                   </div>
                   <div className="grid grid-cols-4 gap-4 text-center">
                     {Object.entries(timeLeft).map(([unit, value]) => (
-                      <div key={unit} className="bg-gray-900/70 rounded-2xl py-5">
+                      <div
+                        key={unit}
+                        className="bg-gray-900/70 rounded-2xl py-5"
+                      >
                         <p className="text-4xl font-black text-purple-400">
                           {formatNumber(value)}
                         </p>
-                        <p className="text-sm text-gray-400 uppercase tracking-wider">{unit}</p>
+                        <p className="text-sm text-gray-400 uppercase tracking-wider">
+                          {unit}
+                        </p>
                       </div>
                     ))}
                   </div>
@@ -271,7 +286,9 @@ const ContestDetails = () => {
                 alt={winner.name}
                 className="w-32 h-32 rounded-full mx-auto border-4 border-yellow-400 shadow-lg mb-4"
               />
-              <p className="text-2xl font-bold text-purple-300">{winner.name}</p>
+              <p className="text-2xl font-bold text-purple-300">
+                {winner.name}
+              </p>
               <p className="text-xl text-gray-300">{winner.email}</p>
             </div>
           )}
@@ -290,16 +307,29 @@ const ContestDetails = () => {
                 className="w-full py-6 text-2xl font-black rounded-3xl bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white shadow-2xl flex items-center justify-center gap-4"
               >
                 Submit Your Task
-                <Sparkles size={32} className="group-hover:rotate-12 transition-transform" />
+                <Sparkles
+                  size={32}
+                  className="group-hover:rotate-12 transition-transform"
+                />
               </button>
             ) : hasSubmittedTask && !winner ? (
               <div className="w-full py-10 bg-gradient-to-r from-green-600/20 to-emerald-600/20 border-2 border-green-500/50 rounded-3xl text-center">
-                <CheckCircle size={80} className="mx-auto mb-6 text-green-400" />
-                <p className="text-4xl font-black text-green-300">Task Submitted!</p>
-                <p className="text-xl text-gray-300 mt-4">
-                  Your submission: <span className="text-purple-300 font-semibold">"{currentParticipant.task}"</span>
+                <CheckCircle
+                  size={80}
+                  className="mx-auto mb-6 text-green-400"
+                />
+                <p className="text-4xl font-black text-green-300">
+                  Task Submitted!
                 </p>
-                <p className="text-lg text-gray-400 mt-3">Thank you! Best of luck 🎉</p>
+                <p className="text-xl text-gray-300 mt-4">
+                  Your submission:{" "}
+                  <span className="text-purple-300 font-semibold">
+                    "{currentParticipant.task}"
+                  </span>
+                </p>
+                <p className="text-lg text-gray-400 mt-3">
+                  Thank you! Best of luck 🎉
+                </p>
               </div>
             ) : null}
           </div>

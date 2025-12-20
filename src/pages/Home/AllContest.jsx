@@ -29,7 +29,9 @@ const AllContest = () => {
       return res.data;
     },
   });
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
 
   // Sort: First by prize descending, then deadline ascending
   const approvedContests = [...contests]
